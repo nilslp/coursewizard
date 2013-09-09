@@ -754,7 +754,30 @@ class dndupload_ajax_processor {
             $resp->groupingname = format_string($groupings[$mod->groupingid]->name);
         }
 
-        echo $OUTPUT->header();
+        //@corehack
+        
+        //echo $OUTPUT->header();
+        
+        
+        // YUI iframe upload does not support application/json
+        // the header needs to be set as text/html or ie8 will try and download 
+        // the response as a file. The hack copies the function $OUTPUT->header()
+        // with the content type changed from text/plain to text/html
+        if (!empty($_FILES)) {
+            @header('Content-type: text/html; charset=utf-8');
+        } else {
+            @header('Content-type: application/json; charset=utf-8');
+        }
+
+        // Headers to make it not cacheable and json
+        @header('Cache-Control: no-store, no-cache, must-revalidate');
+        @header('Cache-Control: post-check=0, pre-check=0', false);
+        @header('Pragma: no-cache');
+        @header('Expires: Mon, 20 Aug 1969 09:23:00 GMT');
+        @header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        @header('Accept-Ranges: none');
+        //@corehack end
+        
         echo json_encode($resp);
         die();
     }

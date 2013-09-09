@@ -1,0 +1,384 @@
+/* ------------------------------------------------------------------- */
+/* Wizard
+/* ------------------------------------------------------------------- */
+
+#wizard-toggle-button{
+	background: #F30 url(images/bg_launch-wizard-button.png) no-repeat 90% center;
+	cursor: pointer;
+	line-height: 60px;
+	/*position: absolute;*/
+	right: 0;
+	text-indent: 18px;
+	/*top: 395px;*/
+	width: 200px;
+	}
+	
+	#wizard-toggle-button:hover{
+		background-color: #DF2300;
+		}
+		
+	#wizard-toggle-button:active{
+		background-color: #C00;
+		}
+
+	#wizard-toggle-button.selected{
+		background-color: #390;
+		}
+	
+#wizard-toggle-button.active{
+	background-color: #390;
+	}
+	
+	#wizard-toggle-button.active:hover{
+		background-color: #2D9300;
+		}
+		
+	#wizard-toggle-button.active:active{
+		background-color: #137900;
+		}
+	
+#wizard-wrapper{
+	background: #999;
+	bottom: -330px;
+	height: 500px;
+	left: 0;
+	/* overflow: scroll; Remove after editing */
+	position: fixed;
+	transition: 0.5s ease-in-out 0.1s;
+	width: 100%;
+        z-index: 999;
+	}	
+
+#wizard-wrapper.visible{
+	bottom: 0;
+	}
+
+#wizard-wrapper.visible.hide{
+	bottom: -270px;
+	}
+	
+#tabs-container{
+	float: left;
+	padding: 0;
+	position: relative;
+	width: 100%;
+	}
+	
+	
+/* ------------------------------------------------------------------- */
+/* Tab Visibility Controls
+/* ------------------------------------------------------------------- */
+	
+ul#tabs-visibility-controls{
+	position: absolute;
+	right: 20px;
+	top: -30px;
+	}
+	
+	ul#tabs-visibility-controls li{
+		display: inline-block;
+		margin-right: 10px;
+		}
+		
+		ul#tabs-visibility-controls li:last-child{
+			margin-right: 0;
+			}
+
+		ul#tabs-visibility-controls span{
+			background: #999 url(images/bg_tabs-visibility-controls.png) no-repeat right top;
+			color: #333;
+			cursor: pointer;
+			display: block;
+			font-weight: bold;
+			line-height: 30px;
+			text-indent: -9999px;
+			transition: 0.1s ease-in-out 0.1s; 
+			width: 30px;
+			}
+			
+			ul#tabs-visibility-controls span:hover{
+				background-color: #888;
+				line-height: 30px;
+				text-indent: 10px;
+				width: 80px;
+				}
+				
+		ul#tabs-visibility-controls #hide span{
+			background-position: right -30px;
+			}
+			
+			.hide ul#tabs-visibility-controls #hide span{
+				background-position: right 0;
+				}
+		
+		ul#tabs-visibility-controls #close span{
+			background-position: right bottom;
+			}
+
+	
+/* ------------------------------------------------------------------- */
+/* Tab Navigation
+/* ------------------------------------------------------------------- */
+
+/* Main Nav */
+
+#tabs{
+	width: 100%;
+	}
+
+ul#tab-nav{
+	background: #555;
+	border-bottom: 2px solid #222;
+	float: left;
+	height: 30px;
+	width: 100%;
+	}
+
+	ul#tab-nav li{
+		background: url(images/bg_tab-nav.png) no-repeat right -125px;
+		display: inline-block;
+		float: left;
+		list-style: none;
+		margin-left: -10px;
+		width: auto;
+		}
+		
+		ul#tab-nav li:hover{
+			background: #444 url(images/bg_tab-nav.png) no-repeat right -165px;
+			}
+		
+		ul#tab-nav li.ui-state-active + li a:hover{
+			background: #444 url(images/bg_tab-nav.png) no-repeat left -245px;
+			}
+		
+		ul#tab-nav li:hover a{
+			background: #444 url(images/bg_tab-nav.png) no-repeat left -205px;
+			margin-left: 0;
+			padding-left: 40px;
+			}
+			
+		ul#tab-nav li.ui-state-active{
+			background: url(images/bg_tab-nav.png) no-repeat left -85px;
+			}
+				
+			ul#tab-nav li.ui-state-active:hover a {
+				margin-left: 10px;
+				padding-left: 30px;
+				}
+				
+		ul#tab-nav li a{
+			line-height: 30px;
+			margin: 0 10px;
+			padding: 0 30px;
+			text-align: center;
+			}
+			
+			ul#tab-nav li.ui-state-active a{
+				background: #333 url(images/bg_tab-nav.png) no-repeat right -45px;
+				margin-right: 0;
+				padding-right: 40px;
+				}
+
+			ul#tab-nav li a .step-number{
+				background: #FFF;
+				border-radius: 20px;
+				color: #555;
+				font-weight: bold;
+				margin-right: 10px;
+				padding: 0 4px;
+				text-align: center;
+				}
+				
+				ul#tab-nav li.ui-state-active a .step-number{
+					color: #333;
+					}
+					
+				ul#tab-nav li.first .step-number,
+				ul#tab-nav li.last .step-number{
+					display: block;
+					float: left;
+					height: 20px;
+					margin-top: 6px;
+					width: 10px;
+					}
+			
+				ul#tab-nav li.first .step-number{
+					background: url(images/bg_tab-icons.png) no-repeat center bottom;
+					}
+
+				ul#tab-nav li.last .step-number{
+					background: url(images/bg_tab-icons.png) no-repeat center top;
+					}
+
+/* ------------------------------------------------------------------- */
+/* Tab Content General
+/* ------------------------------------------------------------------- */
+
+#tab-content{
+	float: left;
+	padding: 0 1%;
+	width: 98%;
+	}
+
+.tab-page{
+	clear: both; /* Remove after editing */
+	/* display: none; Remove after editing */
+	float: left;
+	height: 250px; /* Remove after editing */
+	position: relative;
+	width: 100%;
+	}
+	
+.region{
+	border-right: 1px solid #888;
+	float: left;
+	height: 180px;
+	margin: 20px 2% 0 0;
+	padding: 0 1%;
+	position: relative;
+	width: 20%;
+	}
+	
+.sub-region{
+    border-right: 1px solid #888888;
+    float: left;
+    margin-right: 4%;
+    width: 30%;
+	}
+
+.sub-region.last{
+    margin-right: 0;
+	}
+
+a.help{
+	background: #333;
+	cursor: help;
+	font-weight: bold;
+    height: 20px;
+	line-height: 21px;
+    position: absolute;
+    right: -5%;
+	text-align: center;
+    top: 0;
+    width: 20px;
+	z-index: 2;
+	}
+
+	a.help span{
+		background: #333;
+		padding: 5px;
+		position: absolute;
+		right: 0;
+		width: 200px;
+		visibility: hidden;
+		transition: visibility 0.2s linear 0.2s;
+		}
+		
+	a.help:hover span{
+		visibility: visible;
+		}
+
+                /* ------------------------------------------------------------------- */
+/* Region One
+/* ------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------- */
+/* Region Two
+/* ------------------------------------------------------------------- */
+
+table{
+	text-align: center;
+	width: 90%;
+	}
+	
+table thead tr{
+	background: #999;
+	height: 20px;
+	}
+
+table tr{
+	height: 30px
+	}
+
+table td{
+	color: #369C10;
+	}
+
+table td.incomplete{
+	color: #c00;
+	font-weight: bold;
+	}
+
+table .number{
+ 	background:#333;
+    border-radius: 12px;
+    color: #FFF;
+ 	display: block;
+    left: -5px;
+    line-height: 10px;
+    margin-top: -8px;
+    padding: 5px;
+    position: absolute;
+    text-align: center;
+    width: 10px;
+	}
+	
+colgroup col.numbers{
+	background: none;
+	}
+
+colgroup col.content{
+	background: #B6B6B6;
+	}
+
+/* ------------------------------------------------------------------- */
+/* Region Three
+/* ------------------------------------------------------------------- */
+
+.region.region-three li{
+	list-style: none;
+	}
+
+.region.region-three li span{
+	margin-right: 20px;
+	}
+
+.complete{
+	color: #437620; 
+	}
+	
+.incomplete{
+	color: #C00; 
+	}
+	
+.attn-required,
+.unpublished,
+.published{
+	background-image: url(images/bg_course-icon-key.png);
+	background-repeat: no-repeat;
+	display: block;
+	line-height: 20px;
+	text-indent: 30px;
+	}
+	
+.attn-required{
+	background-position:left top;
+	}
+	
+.unpublished{
+	background-position: left center;
+	}
+	
+.published{
+	background-position: left bottom;
+	}
+   
+/*
+Add an activity or resource
+*/
+div#tab3 div.region-two{
+    width:10%;
+}
+div#tab3 div.region-three{
+    width:55%;
+}
