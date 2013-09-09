@@ -1,0 +1,12 @@
+<?php
+    global $CFG;
+    
+    require_once ($CFG->dirroot . '/blocks/shopping_basket/cart/shopping_cart.php');
+    require_once ($CFG->dirroot . '/blocks/shopping_basket/lib.php');
+    
+    $course = required_param('id', PARAM_INT);
+    
+?>
+<div id="enrol_area" align="center">
+<?php echo get_enrolment_html($course) ?>
+</div>

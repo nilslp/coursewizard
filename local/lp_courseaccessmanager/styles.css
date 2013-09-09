@@ -1,0 +1,78 @@
+/**
+ *     funky styling here!
+ */
+
+/** Course Access **/
+
+#overlay.course-access .wrap { padding: 20px; }
+
+/*#page-content #region-main {float:none;}*/
+a.ygtvspacer:hover {background-color: transparent;border-bottom: 0;}
+/** Current Access Settings **/
+div.current-rules { width: 100%; }
+div.current-rules ul { margin: 0 0 2em 0; }
+div.current-rules ul li { list-style: none; }
+div.current-rules li span.deactivated { color: #999; }
+div.current-rules li.selected { background: #FFC none; }
+div.current-rules li.no-rules { text-align: center; font-weight: bold; }
+div.current-rules li.newrule span.title { padding: 0; }
+div.current-rules li.newrule input { width: 70%; padding: 2px 5px; }
+div.current-rules span.title { padding-left: 5px; }
+div.current-rules ul.controls { margin: 0; }
+div.current-rules ul.controls a { cursor: pointer; background: transparent non center center no-repeat; }
+div.current-rules ul.controls li.toggle a.active { background-image: url([[pix:local_lp_courseaccessmanager|icon_shown]]); }
+div.current-rules ul.controls li.toggle a.inactive { background-image: url([[pix:local_lp_courseaccessmanager|icon_hidden]]); }
+div.current-rules ul.controls li.toggle a.allow-link { background-image: url([[pix:local_lp_courseaccessmanager|icon_link]]); }
+div.current-rules ul.controls li.toggle a.deny-link { background-image: url([[pix:local_lp_courseaccessmanager|icon_unlink]]); }
+div.current-rules div.new { text-align: center; }
+
+div.current-rules { margin: 1em 0 2em 0; }
+div.current-rules ul { margin: 0; padding: 0; line-height: 26px; }
+div.current-rules li { padding: 0; list-style: none; border-top: 1px dotted #CCC; }
+div.current-rules ul ul { padding-left: 20px; }
+
+/** Title **/
+div.current-rules .title { position: relative; clear: both; display: block; padding: 0 5px 0 40px; }
+
+div.current-rules .title .num-children { padding-left: 10px; font-weight: bold; }
+    
+/** Controls **/
+div.current-rules ul.controls { float: right; }
+div.current-rules ul.controls li { display: inline; }
+div.current-rules ul.controls li a { display: block; float: left; width: 20px; height: 20px; margin: 3px 0 0 2px; }
+div.current-rules ul.controls li a { background: transparent none center center no-repeat; }
+div.current-rules ul.controls li a.edit { background-image: url([[pix:local_lp_courseaccessmanager|icon_edit]]); }
+div.current-rules ul.controls li a.delete { background-image: url([[pix:local_lp_courseaccessmanager|icon_delete]]); }
+
+/** Parent **/
+div.current-rules li.parent > .title { font-weight: bold; }
+div.current-rules .parent > .title { background: transparent url([[pix:local_lp_courseaccessmanager|icon_open]]) left center no-repeat; cursor: pointer; }
+
+/** Closed **/
+div.current-rules .closed > .title { background-image: url([[pix:local_lp_courseaccessmanager|icon_closed]]); }
+div.current-rules .closed ul { display: none; }
+div.current-rules .closed ul.controls { display: block; }
+
+/** Hover **/
+div.current-rules .title.hover { background-color: #CCC; }
+
+/** Course List **/
+div.course-list { float: left; width: 48%; padding-right: 2%; }
+
+/** Hierarchy List **/
+div.students { float: right; width: 48%; padding-left: 2%; }
+
+/** Save Button **/
+div.save { clear: both; text-align: center; }
+
+/** Tabs **/
+.tabs { margin: 0; text-align: center; border-top: 1px solid #CCC; }
+.tabs li { position: relative; display: inline; top: -10px; padding: 5px 10px; font-size: 0.7692em; text-transform: uppercase; background: #CCC none; border-right: 1px solid #FFF; cursor: pointer; }
+.tabs li.hover,
+.tabs li.active { color: #FFF; background: #666 none; }
+.tabs li:first-child { border-radius: 10px 0 0 10px; }
+.tabs li:last-child { border-radius: 0 10px 10px 0; }
+
+/** Treeview **/
+.has-children { font-style: italic; }
+.assigned { font-weight: bold; xbackground-color: #FF6; }

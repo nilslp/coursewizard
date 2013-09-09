@@ -1,0 +1,65 @@
+/**
+	Fancy Button CSS
+	Author: Nils Sanderson
+	Date: 04-06-2013
+**/
+
+/** Fancy Buttons - Settings Pop-Up
+**/
+
+.fancy-buttons .panel_wrapper {
+	overflow: auto;
+	}
+ 
+.fancy-buttons .panel_wrapper div.current {
+	height: 245px;
+	}
+
+.fancy-buttons .panel_wrapper fieldset {
+	margin: 10px 0;
+	}
+
+.fancy-buttons .panel_wrapper ul {
+	margin: 0;
+	padding: 0;
+	}
+
+.fancy-buttons .panel_wrapper ul li {
+	display: block;
+	list-style-type: none;
+	padding: 0;
+	}
+
+.fancy-buttons .panel_wrapper ul li label {
+	float: left;
+	margin: 3px 0;
+	width: 36%;
+	}
+
+.fancy-buttons .panel_wrapper ul li input,
+.fancy-buttons .panel_wrapper ul li textarea,
+.fancy-buttons .panel_wrapper ul li select {
+	float: left;
+	margin: 3px 0;
+	width: 60%;
+	}
+
+.fancy-buttons .panel_wrapper ul li textarea {
+	height: 30px;
+	resize: vertical;
+	}
+
+/* Delete Button */
+input#fancy-button-delete {
+	background-color: #ECCCC4;
+	background: url(../../../themes/advanced/skins/default/img/buttons.png) 0 0;
+	border: 0;
+	cursor: pointer;
+	float: left;
+	font-weight: bold;
+	height: 26px;
+	margin: 0;
+	padding: 0;
+	padding-bottom: 2px;
+	width: 94px;
+	}

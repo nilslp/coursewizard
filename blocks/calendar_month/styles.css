@@ -1,0 +1,73 @@
+#page-content .block_calendar_month {
+    overflow: visible;
+}
+
+.tooltip {   
+    border-bottom: 1px dotted #000000; color: #000000; outline: none;
+    cursor: help; text-decoration: none;
+    position: relative;
+}
+
+.tooltip span {
+    margin-left: -999em;
+    position: absolute;
+}
+
+td.day:hover {
+    background-color: #fbf16b;
+}
+
+.tooltip:hover span {
+    font-size: 12px;
+    position: absolute; left: 0em; z-index: 5000; 
+    top: 1em;
+    margin-left: -125px; width: 250px;        
+}
+
+.tooltip:hover span div {
+
+}
+
+.events { padding: 0.8em 1em; }
+* html a:hover { background: transparent; }
+
+.arrow_box {
+    position: relative;
+    background: #ffffff;
+    border: 2px solid #c2e1f5;
+    border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+.arrow_box:after, .arrow_box:before {
+    bottom: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow_box:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #ffffff;
+    border-width: 5px;
+    left: 50%;
+    margin-left: -5px;
+}
+
+.arrow_box:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: #c2e1f5;
+    border-width: 8px;
+    left: 50%;
+    margin-left: -8px;
+}
+
+div.arrow_box > ul {
+    list-style-type:none;
+}
+.arrow_box ul li {
+    list-style-type: none;
+    text-align: center;
+}

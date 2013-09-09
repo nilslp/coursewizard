@@ -1,0 +1,35 @@
+/* CSS Document */
+
+	
+/** welcome email styles **/
+
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index .mform .fitem .fitemtitle {
+    width:50%;
+    margin-right:5px;
+    text-align:left;   
+}
+
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index .mform .felement input,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index .mform .felement textarea {
+    width:300px;
+}
+
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_enable_email_template,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_new_user_cc,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_new_user_email_body,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_new_user_email_from,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_new_user_subject {
+    border-bottom:2px dotted #04A4D0;
+}
+
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_self_reg_confirmation_text,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_self_reg_email_body,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_self_reg_email_cc,
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #fitem_id_self_reg_email_cc {
+    border-bottom:2px dotted #2F6401;
+}
+
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #id_submitbutton, 
+#page-admin-local-dlelegacytools-lpscheduler-welcomeemail-index #id_cancel {
+    width:auto;
+}

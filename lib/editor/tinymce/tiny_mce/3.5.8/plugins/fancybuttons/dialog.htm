@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Fancy Buttons</title>
+	<script type="text/javascript" src="../../tiny_mce_popup.js?v={tinymce_version}"></script>
+	<script type="text/javascript" src="../../utils/mctabs.js?v={tinymce_version}"></script>
+	<script type="text/javascript" src="js/dialog.js?v={tinymce_version}"></script>
+	<link rel="stylesheet" type="text/css" href="css/fancybuttons.css?v={tinymce_version}">
+</head>
+<body>
+
+	<form class="fancy-buttons" onsubmit="fancybuttonsDialog.insert();return false;" action="#">
+		<div class="tabs" role="tablist" tabindex="-1">
+			<ul>
+				<li id="general_tab" aria-controls="general_panel" class="current" role="tab" tabindex="0" aria-selected="true" aria-expanded="true"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;" tabindex="-1">General</a></span></li>
+				<li id="advanced_tab" aria-controls="advanced_panel" role="tab" tabindex="-1" class="" aria-selected="false" aria-expanded="false"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;" tabindex="-1">Advanced</a></span></li>
+			</ul>
+		</div>
+
+		<div class="panel_wrapper">
+			<div id="general_panel" class="current" aria-hidden="false">
+				<p>All external links must begin with <strong>http://</strong> (or https:// if required).</p>
+				<fieldset>
+					<legend>General</legend>
+					<ul>
+						<li>
+							<label>URL:</label>
+							<input id="fancy_btn_url" name="fancy_btn_url" type="text" class="fancy_btn_text" />
+						</li>
+						<li>
+							<label>Image URL:</label>
+							<input id="fancy_btn_image" name="fancy_btn_image" type="text" class="fancy_btn_text" />
+						</li>
+						<li>
+							<label>Header Text:</label>
+							<input id="fancy_btn_header" name="fancy_btn_header" type="text" class="fancy_btn_text" />
+						</li>
+						<li>
+							<label>Pop-Up Text:</label>
+							<textarea id="fancy_btn_popuptext" name="fancy_btn_popuptext" type="text" class="fancy_btn_text" /></textarea>
+						</li>
+					</ul>
+				</fieldset>
+				<p>Contact <a href="mailto:support@learningpool.com">support@learningpool.com</a> if you need help.</p>
+			</div>
+
+			<div id="advanced_panel" class="panel" aria-hidden="true">
+				<p>For Advanced Users (RGB values only).</p>
+				<fieldset>
+					<legend>Colours</legend>
+					<ul>
+						<li>
+							<label>Background:</label>
+							<input id="fancy_btn_bgc" name="fancy_btn_bgc" type="text" class="fancy_btn_color" />
+						</li>
+						<li>
+							<label>Pop-Up Background:</label>
+							<input id="fancy_btn_popupbgc" name="fancy_btn_popupbgc" type="text" class="fancy_btn_color" />
+						</li>
+						<li>
+							<label>Pop-Up Text:</label>
+							<input id="fancy_btn_popupc" name="fancy_btn_popupc" type="text" class="fancy_btn_color" />
+						</li>
+					</ul>					
+				</fieldset>
+				<fieldset>
+					<legend>Display</legend>
+					<ul>
+						<li>
+							<label>Show Pop-Up: </label>
+							<select id="fancy_btn_popupshow" name="fancy_btn_popupshow" type="text" class="fancy_btn_text">
+								<option value="popup-enabled">Show</option>
+								<option value="popup-disabled">Hide</option>
+							</select>
+						</li>
+						<li>
+							<label>Rounded Edges: </label>
+							<select id="fancy_btn_border" name="fancy_btn_border" type="text" class="fancy_btn_text">
+								<option value="rounded">Rounded</option>
+								<option value="sharp">Sharp</option>
+							</select>
+						</li>
+					</ul>					
+				</fieldset>
+				<p>Contact <a href="mailto:support@learningpool.com">support@learningpool.com</a> if you need help.</p>
+			</div>
+		</div>
+
+		<div class="mceActionPanel">
+			<input type="submit" id="insert" name="insert" value="Insert">
+			<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();">
+		</div>
+	</form>
+
+	<input type="submit" id="fancy-button-delete" name="fancy-button-delete" value="Delete" onclick="fancyButtonDelete();">
+
+</body>
+</html>

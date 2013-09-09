@@ -1,0 +1,74 @@
+Release Notes:
+
+Version 2.5.4 Build - 2013062401
+- CONTRIB-823 Add confirmation for deleting a question.
+- When a question is deleted, if it had already been answered, all responses are deleted too.
+- When the last question in a questionnaire is deleted, all that questionnaire's attempts and responses are deleted.
+- Changed all confirmation dialogues from Continue/Cancel to Yes/No.
+- CONTRIB-4075 Images in Question text are now displayed on the Questions editing page. As well as any other media.
+
+Version 2.5.4 Build - 2013062302
+- CONTRIB-4274 Changed Completion conditions from Viewed and Graded to Submitted.
+- Implies adding new "completionsubmit" field in "questionnaire" table.
+
+Version 2.5.4 Build - 2013062301
+- CONTRIB-926 Course reset now includes questionnaire instances. If graded, grades and feedback comments are deleted too.
+- This version also includes major work on making grades work properly for graded questionnaires,
+including a new grade.php file.
+- When creating a new questionnaire, the list of "Copy existing" questionnaires now displays the questionnaire names
+instead of the survey names, which used to be confusing.
+- ALL requires now include complete path to dirroot, e.g. require_once($CFG->dirroot.'/mod/questionnaire/...')
+
+
+Version 2.5.3 Build - 2013062208
+CONTRIB-3167 Removed potential SCALES from list of grades to avoid potential problems.
+CONTRIB-4420 Added new "preview" questionnaire capability (e.g. for tutors etc).
+
+Version 2.5.3 Build - 2013062207
+CONTRIB-4343 Remove call to print_textarea() function in Essay question.
+
+Version 2.5.3 Build - 2013062206
+- CONTRIB-4418 Make questionnaire more compliant with Moodle Coding style recommendations
+- Lots of changes in almost all files to make them compliant with the Coding style. 
+Success 100% on using Code checker. 
+
+Version 2.5.3 Build - 2013062205
+- CONTRIB-4058 Show non-respondents
+
+Version 2.5.2 Build - 2013062204
+- CONTRIB-3528 Change navigate by numbers to navigate by names in the "View by Response tab"
+- Improve the display of Answer the questions page to make it look more like Quiz questions.
+- Generally improve the display of questions to make it similar in all pages: Answer questions, Preview, Print, Reports.
+- Generally tidy up the stylesheet.
+- Started work on making code more Moodle-compliant.
+
+Version 2.5.1 Build - 2013062203
+- CONTRIB-4038 Display respondents' names in front of their answers in the Essay Box question type. 
+
+Version 2.5.1 Build - 2013062202
+- CONTRIB-3163 Display number of responses to rate questions
+- plus various minor changes to the display of responses
+
+Version 2.5.1 Build - 2013062201
+- CONTRIB-4281 Improve navigation in Questionnaire 
+
+Version 2.5.0
+- removed many no longer used items: css folder; lots of unused images in images folder; crosstab.inc, resultslib.php
+- CONTRIB-4304 removed from locallib.php all unused functions: questionnaire_response_key_cmp, questionnaire_preview, 
+  questionnaire_get_active_surveys_menu, questionnaire_get_surveys_menu, questionnaire_survey_has_questions,
+  questionnaire_survey_exists
+- removed all references to cross analysis from all files   
+
+Version 2.4.1 - Release date 20130519
+
+- In accordance with current Moodle languages policy, all language folders other than English have been removed 
+from the lang folder. All translations are now available from AMOS.
+
+
+Version 2.3.2 - Release date 20120820
+
+- CONTRIB-3696 added addinstance string to lang/en/questionnaire.php and lang/fr/questionnaire.php
+- CONTRIB-3797 : fixed typo
+- CONTRIB-3704 (one more compliance with Strict Standards fix !)
+- one more missing new stdClass() for strict compliance
+- CONTRIB-3864 - Added savepoints to all upgrade steps.

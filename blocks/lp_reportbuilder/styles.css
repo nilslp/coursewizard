@@ -1,0 +1,55 @@
+/** My Reports **/
+body.path-blocks-lp_reportbuilder table.generaltable tbody { font-size: 1em; }
+body.path-blocks-lp_reportbuilder table th { background: #CCC; text-align: left; }
+body.path-blocks-lp_reportbuilder table td { padding: 4px; }
+body.path-blocks-lp_reportbuilder table td.options { text-align: center; }
+body.path-blocks-lp_reportbuilder table td.options a { padding-left: 4px; }
+body.path-blocks-lp_reportbuilder div.controls,body.path-blocks-lp_reportbuilder .filter-list {float: left;}
+
+/** Manage Reports **/
+body.path-admin-blocks-lp_reportbuilder table { width: 100%; }
+body.path-admin-blocks-lp_reportbuilder table th { background: #CCC; text-align: left; }
+body.path-admin-blocks-lp_reportbuilder button.add {padding:3px;float:right;margin-bottom:10px;margin-bottom:5px;cursor:pointer;}
+
+/** Side Block **/
+.block_lp_reportbuilder .content ul.report-list { margin-left: 0; line-height: 18px; }
+.block_lp_reportbuilder .content ul.report-list li { padding: 0 0 3px 18px; list-style: none; background: transparent url([[pix:blocks_lp_reportbuilder|icon_report]]) top left no-repeat; }
+
+/** Headers **/
+body.path-blocks-lp_reportbuilder h3.record-count { margin: 0; padding: 1em 0 0 0; font-size: 1em; border-top: 1px dotted #666; }
+
+/** Filter Forms **/
+body.path-blocks-lp_reportbuilder .mform { }
+body.path-blocks-lp_reportbuilder fieldset#newfilter { position: relative; margin-bottom: 0; padding: 4em 0 0 0; border-top: 1px dotted #666; border-bottom: none; }
+body.path-blocks-lp_reportbuilder fieldset#newfilter legend { position: absolute; top: 2em; left: 0; margin: 0; }
+
+/** Buttons **/
+body.path-blocks-lp_reportbuilder a#show-hide-search-filter {float:right; display: block; border:none;padding:2px 0;width:16px;height:16px;}
+body.path-blocks-lp_reportbuilder a.edit-report { float: right; margin-top:3px; }
+body.path-blocks-lp_reportbuilder .saved-search { float: right; margin-top:3px; }
+
+/** Tables **/
+body.path-blocks-lp_reportbuilder .no-overflow th,
+body.path-blocks-lp_reportbuilder .no-overflow td { white-space: nowrap; }
+
+/** Global Settings **/
+body#page-admin-blocks-lp_reportbuilder-globalsettings .reportbuilder-navbuttons,
+body#page-blocks-lp_reportbuilder-scheduled .region-content .singlebutton { float: right; }
+
+#show-showhide-dialog {background:transparent url([[pix:block_lp_reportbuilder|icon_columns]]) no-repeat center center;width:20px;height:20px;border:none; cursor:pointer; }
+.icons-container {float:right;margin-right:0;margin-top:3px;}
+
+/** Reports **/
+body.path-blocks-lp_reportbuilder-reports .no-overflow { clear:both; margin: 1em 0; }
+
+/** Admin Settings **/
+body#page-admin-blocks-lp_reportbuilder-reportadminsettings #usersearch_form { float: right; }
+
+/** dialogue boxes**/
+div.ui-dialog-content {clear:both;}
+
+/**face to face**/
+a.facetofacelinkerror,p.facetofacelinkerror {color:red;margin-bottom:0;}
+/** loading message **/
+body.path-blocks-lp_reportbuilder #loadingmsg .yui3-widget-hd { color: black; }
+body.path-blocks-lp_reportbuilder #loadingmsg .yui3-widget-bd { background: transparent url([[pix:block_lp_reportbuilder|loading]]) left top no-repeat; }

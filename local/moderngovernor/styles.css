@@ -1,0 +1,30 @@
+/**
+ *     funky styling here!
+ */
+ 
+ #page-admin-local-moderngovernor-admin span.school-name {
+     padding: 5px;
+ }
+ 
+ #page-admin-local-moderngovernor-admin form#school-admin-form {
+     min-width: 550px;
+     min-height: 150px;
+     width : auto;
+     height : auto;
+ }
+ 
+ #page-admin-local-moderngovernor-admin div#combine-list {
+     padding: 15px;
+ }
+ 
+ #page-admin-local-moderngovernor-admin input#id_combine {
+     margin: 10px;
+ }
+ 
+ body.path-admin-local-moderngovernor #export {
+     float: right;
+ }
+ 
+ body.path-admin-local-moderngovernor #export .options {
+     font-style: italic;
+ }

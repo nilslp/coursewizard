@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/shopping_basket/db" VERSION="2013031100" COMMENT="XMLDB file for Moodle blocks/shopping_basket">
+<TABLES>
+    <TABLE NAME="shopping_basket_product" COMMENT="Holds the list of products" NEXT="shopping_basket_prod_cat">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="itemcode"/>
+            <FIELD NAME="itemcode" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Unique item code" PREVIOUS="id" NEXT="fullname"/>
+            <FIELD NAME="fullname" TYPE="char" LENGTH="1024" NOTNULL="true" SEQUENCE="false" COMMENT="Full name of product" PREVIOUS="itemcode" NEXT="description"/>
+            <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" COMMENT="Description of product" PREVIOUS="fullname" NEXT="cost"/>
+            <FIELD NAME="cost" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Cost of product" PREVIOUS="description" NEXT="tax"/>
+            <FIELD NAME="tax" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Ratio of tax which should be applied to cost" PREVIOUS="cost" NEXT="enrolperiod"/>
+            <FIELD NAME="enrolperiod" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" COMMENT="Number of days enrolment should last" PREVIOUS="tax" NEXT="hascategory"/>
+            <FIELD NAME="hascategory" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" DEFAULT="0" PREVIOUS="enrolperiod" NEXT="visible"/>
+            <FIELD NAME="visible" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" DEFAULT="0" PREVIOUS="hascategory" NEXT="deleted"/>
+            <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" DEFAULT="0" PREVIOUS="visible" NEXT="timecreated"/>
+            <FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Creation date" PREVIOUS="deleted" NEXT="timemodified"/>
+            <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Last updated date" PREVIOUS="timecreated" NEXT="modifierid"/>
+            <FIELD NAME="modifierid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Last user to update" PREVIOUS="timemodified"/>
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="itemcode-UNIQUE"/>
+            <KEY NAME="itemcode-UNIQUE" TYPE="unique" FIELDS="itemcode" PREVIOUS="primary" />           
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_prod_cat" PREVIOUS="shopping_basket_product" NEXT="shopping_basket_prod_course" COMMENT="Holds the categories associated with a specific product">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="product"/>
+            <FIELD NAME="product" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Product ID" PREVIOUS="id" NEXT="category"/>
+            <FIELD NAME="category" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Category ID" PREVIOUS="product" NEXT="timemodified" />
+            <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Last updated date" PREVIOUS="category" NEXT="modifierid"/>
+            <FIELD NAME="modifierid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Last user to update" PREVIOUS="timemodified"/>
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_product" />
+            <KEY NAME="fk_product" TYPE="foreign" FIELDS="product" REFTABLE="shopping_basket_product" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_category"/>
+            <KEY NAME="fk_category" TYPE="foreign" FIELDS="category" REFTABLE="course_categories" REFFIELDS="id" PREVIOUS="fk_product"/>
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_prod_course" PREVIOUS="shopping_basket_prod_cat" NEXT="shopping_basket_order" COMMENT="Holds the courses associated with a specific product">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="product"/>
+            <FIELD NAME="product" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Unique item code" PREVIOUS="id" NEXT="course"/>
+            <FIELD NAME="course" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Full name of product" PREVIOUS="product" NEXT="timemodified" />
+            <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Last updated date" PREVIOUS="course" NEXT="modifierid"/>
+            <FIELD NAME="modifierid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Last user to update" PREVIOUS="timemodified"/>
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_product" />
+            <KEY NAME="fk_product" TYPE="foreign" FIELDS="product" REFTABLE="shopping_basket_product" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_course"/>
+            <KEY NAME="fk_course" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id" PREVIOUS="fk_product"/>            
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_order" PREVIOUS="shopping_basket_prod_course" NEXT="shopping_basket_order_detail" COMMENT="Holds the order">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+            <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="po_number"/>
+            <FIELD NAME="po_number" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" PREVIOUS="userid" NEXT="payment_provider"/>
+            <FIELD NAME="payment_provider" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="po_number" NEXT="business"/>
+            <FIELD NAME="business" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" PREVIOUS="payment_provider" NEXT="business_key"/>
+            <FIELD NAME="business_key" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="business" NEXT="payment_status"/>
+            <FIELD NAME="payment_status" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="business_key" NEXT="pending_reason"/>
+            <FIELD NAME="pending_reason" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="payment_status" NEXT="reason_code"/>
+            <FIELD NAME="reason_code" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" PREVIOUS="pending_reason" NEXT="txn_id"/>
+            <FIELD NAME="txn_id" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="reason_code" NEXT="txn_key"/>
+            <FIELD NAME="txn_key" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="txn_id" NEXT="txn_type"/>
+            <FIELD NAME="txn_type" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" PREVIOUS="txn_key" NEXT="payment_type"/>
+            <FIELD NAME="payment_type" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" PREVIOUS="txn_type" NEXT="currency"/>
+            <FIELD NAME="currency" TYPE="char" LENGTH="4" NOTNULL="false" SEQUENCE="false" PREVIOUS="payment_type" NEXT="tax"/>            
+            <FIELD NAME="tax" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="currency" NEXT="total"/>
+            <FIELD NAME="total" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="tax" NEXT="discount"/>
+            <FIELD NAME="discount" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="total" NEXT="discountcode"/>
+            <FIELD NAME="discountcode" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" PREVIOUS="discount" NEXT="payer_id" />
+            <FIELD NAME="payer_id" TYPE="char" LENGTH="13" NOTNULL="false" SEQUENCE="false" PREVIOUS="discountcode" NEXT="payer_email"/>
+            <FIELD NAME="payer_email" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" PREVIOUS="payer_id" NEXT="mc_gross"/>
+            <FIELD NAME="mc_gross" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="payer_email" NEXT="mc_currency"/>
+            <FIELD NAME="mc_currency" TYPE="char" LENGTH="4" NOTNULL="false" SEQUENCE="false" PREVIOUS="mc_gross" NEXT="payer_business_name"/>
+            <FIELD NAME="payer_business_name" TYPE="CHAR" LENGTH="127" NOTNULL="false" SEQUENCE="false" PREVIOUS="mc_currency" NEXT="first_name"/>
+            <FIELD NAME="first_name" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" PREVIOUS="payer_business_name" NEXT="last_name"/>
+            <FIELD NAME="last_name" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" PREVIOUS="first_name" NEXT="contact_phone"/>
+            <FIELD NAME="contact_phone" TYPE="char" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="last_name" NEXT="address_zip"/>
+            <FIELD NAME="address_zip" TYPE="char" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="contact_phone" NEXT="address_street"/>
+            <FIELD NAME="address_street" TYPE="char" LENGTH="200" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="address_zip" NEXT="address_status"/>
+            <FIELD NAME="address_status" TYPE="char" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="address_street" NEXT="address_name"/>
+            <FIELD NAME="address_name" TYPE="char" LENGTH="128" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="address_status" NEXT="address_country_code"/>
+            <FIELD NAME="address_country_code" TYPE="char" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="address_name" NEXT="address_city"/>
+            <FIELD NAME="address_city" TYPE="char" LENGTH="40" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="address_country_code" NEXT="address_country"/>
+            <FIELD NAME="address_country" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" PREVIOUS="address_city" NEXT="fulfilled"/>
+            <FIELD NAME="fulfilled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" PREVIOUS="address_country" NEXT="timecreated" />
+            <FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Creation date" PREVIOUS="fulfilled" NEXT="timemodified"/>
+            <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="Last updated date" PREVIOUS="timecreated" />
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_user" />
+            <KEY NAME="fk_user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="txn_id-UNIQUE" />
+            <KEY NAME="txn_id-UNIQUE" TYPE="unique" FIELDS="txn_id" PREVIOUS="fk_user" />
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_order_detail" PREVIOUS="shopping_basket_order" NEXT="shopping_basket_log" COMMENT="Holds the products associated with the order">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="orderid"/>
+            <FIELD NAME="orderid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="productid"/>            
+            <FIELD NAME="productid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="orderid" NEXT="quantity"/>
+            <FIELD NAME="quantity" TYPE="int" LENGTH="3" NOTNULL="true"  SEQUENCE="false" PREVIOUS="productid" NEXT="cost"/>
+            <FIELD NAME="cost" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="true" SEQUENCE="false" PREVIOUS="quantity" NEXT="linetotal"/>            
+            <FIELD NAME="linetotal" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="false" SEQUENCE="false" PREVIOUS="cost" NEXT="linetax"/>
+            <FIELD NAME="linetax" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="false" SEQUENCE="false" PREVIOUS="linetotal" />
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_order" />       
+            <KEY NAME="fk_order" TYPE="foreign" FIELDS="orderid" REFTABLE="shopping_basket_order" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_product"/>
+            <KEY NAME="fk_product" TYPE="foreign" FIELDS="productid" REFTABLE="shopping_basket_product" REFFIELDS="id" PREVIOUS="fk_order"/>
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_log" PREVIOUS="shopping_basket_order_detail" NEXT="shopping_basket_license" COMMENT="Logging table for any errors">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="orderid"/>
+            <FIELD NAME="orderid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="response"/>            
+            <FIELD NAME="response" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="orderid" NEXT="message" />
+            <FIELD NAME="message" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="response" NEXT="time" />
+            <FIELD NAME="time" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="message" />            
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_order" />       
+            <KEY NAME="fk_order" TYPE="foreign" FIELDS="orderid" REFTABLE="shopping_basket_order" REFFIELDS="id" PREVIOUS="primary" />
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_license" PREVIOUS="shopping_basket_log" NEXT="shopping_basket_voucher" COMMENT="Logging table for any errors">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="licensekey"/>
+            <FIELD NAME="licensekey" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="orderid" />
+            <FIELD NAME="orderid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="licensekey" NEXT="productid"/>
+            <FIELD NAME="productid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="orderid" NEXT="userid"/>    
+            <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="productid" NEXT="startdate"/>
+            <FIELD NAME="startdate" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="enddate" />
+            <FIELD NAME="enddate" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"  PREVIOUS="startdate" />
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_order" />       
+            <KEY NAME="fk_order" TYPE="foreign" FIELDS="orderid" REFTABLE="shopping_basket_order" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_product" />
+            <KEY NAME="fk_product" TYPE="foreign" FIELDS="productid" REFTABLE="shopping_basket_order_product" REFFIELDS="id" PREVIOUS="fk_order" NEXT="licensekey-UNIQUE" />
+            <KEY NAME="licensekey-UNIQUE" TYPE="unique" FIELDS="licensekey" PREVIOUS="fk_product" />
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_voucher" PREVIOUS="shopping_basket_license" NEXT="shopping_basket_prod_disc" COMMENT="Holds discount vouchers">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="discountcode"/>
+            <FIELD NAME="discountcode" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="discounttype" />
+            <FIELD NAME="discounttype" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="discountcode" NEXT="rate"/>
+            <FIELD NAME="rate" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="discounttype" NEXT="minordervalue"/>    
+            <FIELD NAME="minordervalue" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="rate" NEXT="expirydate"/>
+            <FIELD NAME="expirydate" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="minordervalue" NEXT="singleuse" />
+            <FIELD NAME="singleuse" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="expirydate" NEXT="maxval" />
+            <FIELD NAME="maxval" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="singleuse" NEXT="expired" />
+            <FIELD NAME="expired" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="maxval" />
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="discountcode-UNIQUE" />       
+            <KEY NAME="discountcode-UNIQUE" TYPE="unique" FIELDS="discountcode" PREVIOUS="primary" />
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="shopping_basket_prod_disc" PREVIOUS="shopping_basket_voucher" COMMENT="Holds product discount tiers">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="productid"/>
+            <FIELD NAME="productid" TYPE="int" LENGTH="11" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="min" />
+            <FIELD NAME="min" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="productid" NEXT="max"/>
+            <FIELD NAME="max" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="min" NEXT="rate" />
+            <FIELD NAME="rate" TYPE="number" LENGTH="12" DECIMALS="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="max" NEXT="criteria"/>
+            <FIELD NAME="criteria" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false" PREVIOUS="rate" NEXT="discounttype" />
+            <FIELD NAME="discounttype" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false" PREVIOUS="criteria" />
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_product" />
+            <KEY NAME="fk_product" TYPE="foreign" FIELDS="productid" REFTABLE="shopping_basket_product" REFFIELDS="id" PREVIOUS="primary" />
+        </KEYS>
+    </TABLE>
+</TABLES>
+</XMLDB>

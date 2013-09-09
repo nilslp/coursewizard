@@ -1,0 +1,106 @@
+/**
+ *     funky styling here!
+ */
+ 
+ /** Course Enrol **/
+#region-main { position: relative; }
+
+/** Course List **/
+body.path-admin-local-lp_enrolment_manager div.course-list { float: left; width: 30%; padding-right: 2%; }
+body.path-admin-local-lp_enrolment_manager div.course-list li.active { background: #FF9 url(../img/icon_closed.gif) right center no-repeat; }
+body.path-admin-local-lp_enrolment_manager div.course-list li .title { padding-left: 20px; }
+
+/** Right Panel **/
+body.path-admin-local-lp_enrolment_manager .right-panel { float: left; width: 65%; margin-top: 2em; padding-left: 2%; }
+body.path-admin-local-lp_enrolment_manager .right-panel h3 { padding-bottom: 1em; font-size: 1.3846em; font-weight: bold; }
+
+/** **/
+body.path-admin-local-lp_enrolment_manager .right-panel.init,
+body.path-admin-local-lp_enrolment_manager .right-panel.loading { width: 65%; padding: 0 0 50px 2%; text-align: center; }
+body.path-admin-local-lp_enrolment_manager .right-panel.loading { line-height: 300px; color: #FFF; text-shadow: 5px 5px 10px rgba(0,0,0,1); border-radius: 150px; box-shadow: inset 0 0 50px 10px rgba(255,255,255,1); background: transparent url(../img/waiting_for_cookies.gif) center center no-repeat; }
+body.path-admin-local-lp_enrolment_manager .right-panel.loading img { xdisplay: block; border-radius: 150px; }
+
+/** Description **/
+body.path-admin-local-lp_enrolment_manager .right-panel .desc dl { clear: both; padding: 0.5em 0; border-top: 1px dotted #CCC; }
+body.path-admin-local-lp_enrolment_manager .right-panel .desc dt { float: left; width: 13%; padding-right: 2%; xtext-align: right; text-transform: uppercase; }
+body.path-admin-local-lp_enrolment_manager .right-panel .desc dd { margin-left: 15%; }
+
+/** Tabs **/
+body.path-admin-local-lp_enrolment_manager .tabs { margin: 0; text-align: center; border-top: 1px solid #CCC; }
+body.path-admin-local-lp_enrolment_manager .tabs li { position: relative; display: inline; top: -10px; padding: 5px 10px; font-size: 0.7692em; text-transform: uppercase; background: #CCC none; border-right: 1px solid #FFF; cursor: pointer; text-wrap: avoid; word-break: keep-all;}
+body.path-admin-local-lp_enrolment_manager .tabs li.hover,
+body.path-admin-local-lp_enrolment_manager .tabs li.active { color: #FFF; background: #666 none; }
+body.path-admin-local-lp_enrolment_manager .tabs li:first-child { border-radius: 10px 0 0 10px; }
+body.path-admin-local-lp_enrolment_manager .tabs li:last-child { border-radius: 0 10px 10px 0; }
+
+body.path-admin-local-lp_enrolment_manager div.loading {
+    background: #f1f1f1 url(./pix/spinner.gif) center 20px no-repeat;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+}
+
+body.path-admin-local-lp_enrolment_manager table#usertable {
+    xfloat:left;
+    clear:left;
+}
+
+body.path-admin-local-lp_enrolment_manager table#usertable th {
+    text-align: left;
+}
+
+/** Search **/
+body.path-admin-local-lp_enrolment_manager .search { float: right; clear: right; margin: 1em 0; }
+body.path-admin-local-lp_enrolment_manager .search input,
+body.path-admin-local-lp_enrolment_manager .search button.reset { float: left; }
+body.path-admin-local-lp_enrolment_manager .search input { padding: 2px 5px; }
+body.path-admin-local-lp_enrolment_manager .search button { height: 24px; width: 30px; border-radius: 5px; border-width: 1px; }
+body.path-admin-local-lp_enrolment_manager .search input[type='submit'].search { float: left; margin: 0; background: #CCC url([[pix:local_lp_enrolment_manager|icon_search]]) center center no-repeat; }
+body.path-admin-local-lp_enrolment_manager .search input[type='button'].reset { background: #CCC url([[pix:local_lp_enrolment_manager|icon_reset]]) center center no-repeat; }
+
+
+/** Paging
+.paging { margin: 1em 0; }
+.paging a:first-child { border-radius: 10px 0 0 10px; }
+.paging a:last-child { border-radius: 0 10px 10px 0; }
+.paging a.disabled { color: #999; background-color: #CCC; cursor: default; }
+.paging a.hover,
+.paging a.active { color: #FFF; background: #666; }
+.paging a { display: block; float: left; margin-right: 1px ; padding: 2px 6px; color: #000; text-decoration: none; background: #CCC none; }
+ **/
+ 
+body.path-admin-local-lp_enrolment_manager .panel.tree-view { margin-top: 0; }
+body.path-admin-local-lp_enrolment_manager table#usertable { width: 100%; margin-bottom: 1em; }
+body.path-admin-local-lp_enrolment_manager table#usertable th, table#usertable td { padding: 4px; vertical-align: top; }
+body.path-admin-local-lp_enrolment_manager table#usertable th { font-size: 0.7692em; font-weight: bold; text-transform: uppercase; color: #666; border-top: 2px solid #CCC; }
+body.path-admin-local-lp_enrolment_manager table#usertable th, table#usertable td { border-bottom: 1px solid #CCC; }
+body.path-admin-local-lp_enrolment_manager  #page-content .meta { font-size: 0.7692em; text-transform: uppercase; overflow: hidden; white-space: nowrap; }
+
+/** Description **/
+body.path-admin-local-lp_enrolment_manager .right-panel .desc dl { clear: both; padding: 0.5em 0; border-top: 1px dotted #CCC; }
+body.path-admin-local-lp_enrolment_manager .right-panel .desc dt { float: left; width: 13%; padding-right: 2%; xtext-align: right; text-transform: uppercase; }
+body.path-admin-local-lp_enrolment_manager .right-panel .desc dd { margin-left: 15%; }
+
+body.path-admin-local-lp_enrolment_manager .ygtv-highlight .ygtv-highlight0 .ygtvfocus .ygtvlabel, 
+body.path-admin-local-lp_enrolment_manager .ygtv-highlight .ygtv-highlight1 .ygtvfocus .ygtvlabel, 
+body.path-admin-local-lp_enrolment_manager .ygtv-highlight .ygtv-highlight2 .ygtvfocus .ygtvlabel {
+    background-color: transparent !important;
+}
+body.path-admin-local-lp_enrolment_manager .ygtv-checkbox .ygtv-highlight0 .ygtvfocus.ygtvcontent, 
+body.path-admin-local-lp_enrolment_manager .ygtv-checkbox .ygtv-highlight1 .ygtvfocus.ygtvcontent, 
+body.path-admin-local-lp_enrolment_manager .ygtv-checkbox .ygtv-highlight2 .ygtvfocus.ygtvcontent {
+    background-color: transparent !important;
+}
+body.path-admin-local-lp_enrolment_manager .ygtvfocus {
+    background-color: transparent !important;
+}
+body.path-admin-local-lp_enrolment_manager .ygtvfocus .ygtvlabel, 
+body.path-admin-local-lp_enrolment_manager .ygtvfocus .ygtvlabel:link, 
+body.path-admin-local-lp_enrolment_manager .ygtvfocus .ygtvlabel:visited, 
+body.path-admin-local-lp_enrolment_manager .ygtvfocus .ygtvlabel:hover {
+    background-color: transparent !important;
+}
+
+body.path-admin-local-lp_enrolment_manager #lpcoursetree div.ygtvitem {padding-right: 18px;}
+body.path-admin-local-lp_enrolment_manager #lpcoursetree div.ygtvitem.selected {background: #FF9 url([[pix:local_lp_enrolment_manager|icon_closed]]) right center no-repeat;border-top: 1px dotted #CCC;border-bottom: 1px dotted #CCC;}

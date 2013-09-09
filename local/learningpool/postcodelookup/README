@@ -1,0 +1,18 @@
+This sub-plugin allows Admins to add postcode lookup functionality to signup forms on the DLE.
+
+Steps to activate:
+
+1 - An account with a postcode lookup webservice is required. Currently, the plugin supports http://www.postcodesoftware.co.uk/
+    This is a paid service, costing £44 per year.
+2 - You will need to add user profile fields (Site Administration > Users > Accounts > User Profile Fields) to support the data returned
+    by the webservice. The service will find Premise details (Address 1 - Address 4), Town and Country. You will need to add a postcode field
+    as a minimum, but other fields are optional. You should use Text Input as the field type and you should select the option to display each
+    field on the signup page.
+3 - You will need to add authentication details and tell the plugin how to map to the new profile fields. Browse to 
+    Site Administration > Learning Pool > Postcode Lookup and add your account details, the url to the webservice and add the shortnames
+    for each of the profile fields to map them to the appropriate address fields. Finally, check the box to enable the lookup button.
+
+When you've done all this, you can browse to <sitename>/login/signup.php and you'll see that the postcode field is now shown on the
+signup form along with a button to look up the address. If the service finds a result, it will display a dropdown of house numbers
+that the user can select from, accept and the rest of the address details will be automatically populated into the form. The user also
+has the option of editing those fields after having used the lookup service.

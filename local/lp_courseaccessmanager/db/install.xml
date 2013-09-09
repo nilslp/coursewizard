@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/lp_courseaccessmanager/db" VERSION="20120213" COMMENT="XMLDB file for Moodle local/lp_courseaccessmanager"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="lp_access_rule" COMMENT="rules defining access to courses or categories" NEXT="lp_access_assignment">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="active"/>
+        <FIELD NAME="active" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="name" NEXT="allowdeeplinking"/>
+        <FIELD NAME="allowdeeplinking" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="active" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="allowdeeplinking"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="lp_access_assignment" COMMENT="user course access records" PREVIOUS="lp_access_rule" NEXT="lp_access_context">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="rule"/>
+        <FIELD NAME="rule" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="assigned"/>
+        <FIELD NAME="assigned" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="rule" NEXT="assignmentcontext"/>
+        <FIELD NAME="assignmentcontext" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="10" SEQUENCE="false" COMMENT="this indicates whether the assigned field is a hierarchyid(10) or userid(20)" PREVIOUS="assigned" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="assignmentcontext"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_rule"/>
+        <KEY NAME="fk_rule" TYPE="foreign" FIELDS="rule" REFTABLE="lp_access_rule" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="ui_rule_assign_context" UNIQUE="true" FIELDS="rule, assigned, assignmentcontext"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="lp_access_context" COMMENT="Default comment for the table, please edit me" PREVIOUS="lp_access_assignment">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="rule"/>
+        <FIELD NAME="rule" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="context"/>
+        <FIELD NAME="context" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="key into the context table" PREVIOUS="rule"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_rule"/>
+        <KEY NAME="fk_rule" TYPE="foreign" FIELDS="rule" REFTABLE="lp_access_rule" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_context"/>
+        <KEY NAME="fk_context" TYPE="foreign" FIELDS="context" REFTABLE="context" REFFIELDS="id" PREVIOUS="fk_rule"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

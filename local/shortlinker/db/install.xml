@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/shortlinker/db" VERSION="20121205" COMMENT="Shortlinker XMLDB"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="shortlinker" COMMENT="Short Links primary table" NEXT="shortlinker_params">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="scode"/>
+        <FIELD NAME="scode" TYPE="char" LENGTH="15" NOTNULL="true" SEQUENCE="false" COMMENT="Short Code the random characters that identify this link when passed as a var" PREVIOUS="id" NEXT="description"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Description for url" PREVIOUS="scode" NEXT="url"/>
+        <FIELD NAME="url" TYPE="char" LENGTH="512" NOTNULL="false" SEQUENCE="false" COMMENT="Url that has been shortened" PREVIOUS="description" NEXT="active"/>
+        <FIELD NAME="active" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="1" SEQUENCE="false" COMMENT="Boolean flag to denote if the url should be accessible" PREVIOUS="url" NEXT="created"/>
+        <FIELD NAME="created" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Time created" PREVIOUS="active" NEXT="modified"/>
+        <FIELD NAME="modified" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Date url was modified" PREVIOUS="created" NEXT="modifierid"/>
+        <FIELD NAME="modifierid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="User id of last modifier" PREVIOUS="modified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="shortlinker_params" COMMENT="Parameter tokens with their intended value" PREVIOUS="shortlinker" NEXT="shortlinker_combine">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="var"/>
+        <FIELD NAME="var" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Variable name for the url param" PREVIOUS="id" NEXT="token"/>
+        <FIELD NAME="token" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Token to be found" PREVIOUS="var" NEXT="handle"/>
+        <FIELD NAME="handle" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="The value that should be used to replace the token" PREVIOUS="token"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="shortlinker_combine" COMMENT="Linking table to put all the pieces together" PREVIOUS="shortlinker_params" NEXT="shortlinker_profile">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="slinkid"/>
+        <FIELD NAME="slinkid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Id for url row in shortlinker" PREVIOUS="id" NEXT="paramid"/>
+        <FIELD NAME="paramid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Id of parameter row in shortlinker_params" PREVIOUS="slinkid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="shortlinker_profile" COMMENT="Predefined set of params" PREVIOUS="shortlinker_combine" NEXT="shortlinker_profile_param">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sname"/>
+        <FIELD NAME="sname" TYPE="char" LENGTH="150" NOTNULL="false" SEQUENCE="false" COMMENT="Name of the profile" PREVIOUS="id" NEXT="description"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="256" NOTNULL="false" SEQUENCE="false" COMMENT="Description of the profile" PREVIOUS="sname"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="shortlinker_profile_param" COMMENT="Linking table for profiles to params" PREVIOUS="shortlinker_profile">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="profileid"/>
+        <FIELD NAME="profileid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Profile record id" PREVIOUS="id" NEXT="paramid"/>
+        <FIELD NAME="paramid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Parameter row id" PREVIOUS="profileid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/lp_enrolment_manager/db" VERSION="20111130" COMMENT="XMLDB file for Moodle local/lp_enrolment_manager"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="lp_enrol_email" COMMENT="templates for unsent enrolment emails" NEXT="lp_enrol_email_queue">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sender"/>
+        <FIELD NAME="sender" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="subject"/>
+        <FIELD NAME="subject" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="sender" NEXT="body"/>
+        <FIELD NAME="body" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="subject" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="foreign key to course table" PREVIOUS="body"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_course"/>
+        <KEY NAME="fk_course" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="lp_enrol_email_queue" COMMENT="records users that have yet to be mailed about their enrolment" PREVIOUS="lp_enrol_email">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="template"/>
+        <FIELD NAME="template" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="template" NEXT="sent"/>
+        <FIELD NAME="sent" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="userid" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="sent"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_template"/>
+        <KEY NAME="fk_template" TYPE="foreign" FIELDS="template" REFTABLE="lp_enrol_email" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_user"/>
+        <KEY NAME="fk_user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="fk_template"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

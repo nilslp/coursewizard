@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/lp_hierarchy/db" VERSION="2011072801" COMMENT="XMLDB file for Moodle blocks/lp_hierarchy">
+<TABLES>
+    <TABLE NAME="lp_hierarchy_depth" COMMENT="Holds the depths used for maintaining the hierarchy" NEXT="lp_hierarchy">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="shortname"/>
+            <FIELD NAME="shortname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="fullname"/>
+            <FIELD NAME="fullname" TYPE="char" LENGTH="1024" NOTNULL="true" SEQUENCE="false" PREVIOUS="shortname" NEXT="description"/>
+            <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="fullname" NEXT="level"/>
+            <FIELD NAME="level" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="description" NEXT="timecreated"/>
+            <FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="level" NEXT="timemodified"/>
+            <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="timecreated" NEXT="modifierid"/>
+            <FIELD NAME="modifierid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="timemodified"/>
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="shortname-UNIQUE"/>
+            <KEY NAME="shortname-UNIQUE" TYPE="unique" FIELDS="shortname" PREVIOUS="primary" NEXT="level-UNIQUE"/>
+            <KEY NAME="level-UNIQUE" TYPE="unique" FIELDS="level" PREVIOUS="shortname-UNIQUE"/>            
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="lp_hierarchy" COMMENT="Holds the details of the directorates, departments and sub-departments, etc." PREVIOUS="lp_hierarchy_depth" NEXT="lp_user_hierarchy">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="shortname"/>
+            <FIELD NAME="shortname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="fullname"/>
+            <FIELD NAME="fullname" TYPE="char" LENGTH="1024" NOTNULL="true" SEQUENCE="false" PREVIOUS="shortname" NEXT="description"/>
+            <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="fullname" NEXT="parentid"/>
+            <FIELD NAME="parentid" TYPE="int" LENGTH="11" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="depthid"/>
+            <FIELD NAME="depthid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="parentid" NEXT="path"/>
+            <FIELD NAME="path" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="depthid" NEXT="sortorder"/>
+            <FIELD NAME="sortorder" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="path" NEXT="visible"/>
+            <FIELD NAME="visible" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" PREVIOUS="sortorder" NEXT="contactid"/>
+            <FIELD NAME="contactid" TYPE="int" LENGTH="11" NOTNULL="false" SEQUENCE="false" PREVIOUS="visible" NEXT="oldid"/>            
+            <FIELD NAME="oldid" TYPE="int" LENGTH="11" NOTNULL="false" SEQUENCE="false" PREVIOUS="contactid" NEXT="timecreated"/>            
+            <FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="oldid" NEXT="timemodified"/>
+            <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="timecreated" NEXT="modifierid"/>
+            <FIELD NAME="modifierid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="timemodified"/>
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="shortname-UNIQUE"/>
+            <KEY NAME="shortname-UNIQUE" TYPE="unique" FIELDS="shortname" PREVIOUS="primary" NEXT="parentid-FK"/>
+            <KEY NAME="parentid-FK" TYPE="foreign" FIELDS="parentid" REFTABLE="lp_hierarchy" REFFIELDS="id" COMMENT="Note that to make this recursive FK working someday, the parent field must be declared NULL" PREVIOUS="shortname-UNIQUE" NEXT="depthid-FK"/>
+            <KEY NAME="depthid-FK" TYPE="foreign" FIELDS="depthid" REFTABLE="lp_hierarchy_depth" REFFIELDS="id" PREVIOUS="parentid-FK"/>
+        </KEYS>
+    </TABLE>
+	<TABLE NAME="lp_user_hierarchy" COMMENT="Stores a user's hierarchy" PREVIOUS="lp_hierarchy">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+            <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="hierarchyid"/>
+            <FIELD NAME="hierarchyid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="userid" NEXT="freetext"/>
+            <FIELD NAME="freetext" TYPE="char" LENGTH="1024" NOTNULL="false" SEQUENCE="false" PREVIOUS="hierarchyid"/>
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="userid-FK"/>
+            <KEY NAME="userid-FK" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="hierarchyid-FK"/>
+            <KEY NAME="hierarchyid-FK" TYPE="foreign" FIELDS="hierarchyid" REFTABLE="lp_hierarchy" REFFIELDS="id" PREVIOUS="userid-FK"/>
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="lp_user_hierarchy_uix" UNIQUE="true" FIELDS="userid,hierarchyid" COMMENT="Unique index for lp_user_hierarchy table"/>
+        </INDEXES>
+    </TABLE>
+</TABLES>
+</XMLDB>

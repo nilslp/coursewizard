@@ -1,0 +1,86 @@
+/** **/
+
+#page-admin-setting-blocksettinglp_hierarchy form#adminsettings a.manage { padding: 0 0 0 20px; background: transparent url([[pix:theme|icon_settings]]) left center no-repeat; }
+
+
+
+/** ---------------------------------------------------------------------------
+    Tree Stuff  **/
+
+ul.lp-tree { margin: 2em 0; }
+ul.lp-tree ul { margin: 0; background: transparent url([[pix:lp/hierarchy/bg_connector]]) top left repeat-y; }
+ul.lp-tree li { list-style: disc inside url([[pix:lp/hierarchy/icon_dot]]); cursor: default; }
+ul.lp-tree li li { padding: 0 0 0 25px; background: transparent url([[pix:lp/hierarchy/bg_connector_h]]) 6px 8px no-repeat; }
+ul.lp-tree li.lp-tree-branch { list-style-image: url([[pix:t/collapsed]]); cursor: pointer; }
+ul.lp-tree li.lp-tree-expand { list-style-image: url([[pix:t/expanded]]); }
+ul.lp-tree li.lp-tree-branch > ul { display: none; }
+ul.lp-tree li.lp-tree-expand > ul { display: block; }
+
+
+/** ---------------------------------------------------------------------------
+    Manage users  **/
+
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset { padding-bottom: 0; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem fieldset.felement { width: 100%; }
+
+/** Generic Buttons **/
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .felement button {
+    font-weight: bold;
+    border: 1px solid #999;
+    border-radius: 5px; 
+    cursor: pointer;
+    background: rgb(238,238,238); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+    }
+
+/** Cols A & B **/
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem_fgroup { float: left; width: 43%; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .fitemtitle { float: none; width: auto; padding: 1em 0; text-align: left; font-size: 1.25em; font-weight: bold; border-top: 4px solid #CCC; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .felement { padding-left: 0; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .felement select,
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .felement input { clear: both; display: block; width: 100%; margin-bottom: 1em; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .felement .user-search { width: 97%; padding: 0.5%; border: 1px solid #999; border-radius: 3px; }
+
+/** Col A & B Items **/
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .felement .user-list option { padding: 0.25em; border-bottom: 1px dashed #CCC; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .felement .user-list option.hover { background: #FFC none; cursor: pointer; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .fitem > .felement .user-list option.deleted { font-weight: bold; }
+
+/** Column Controls **/
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_group_col_ctrl { width: 10%; padding: 10em 2% 0; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_group_col_ctrl .fitemtitle { display: none; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_group_col_ctrl button { display: block; width: 100%; margin-bottom: 0.5em; padding: 0.5em 0; }
+
+/** Form Control Buttons **/
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_buttonar { float: none; width: 100%; text-align: center; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_buttonar .fitemtitle { display: none; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_buttonar .felement { text-align: center; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_buttonar .felement button { display: inline; width: auto; padding: 10px 30px; font-size: 1.25em; font-weight: bold;}
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset #fgroup_id_buttonar .felement #id_submitbutton {
+    color: #FFF;
+    text-shadow: 0 -1px 1px #000;
+    background: rgb(36,160,51); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(46,204,73,1) 0%, rgba(36,160,51,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(46,204,73,1)), color-stop(100%,rgba(36,160,51,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(46,204,73,1) 0%,rgba(36,160,51,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(46,204,73,1) 0%,rgba(36,160,51,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(46,204,73,1) 0%,rgba(36,160,51,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(46,204,73,1) 0%,rgba(36,160,51,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2ecc49', endColorstr='#24a033',GradientType=0 ); /* IE6-9 */
+    }
+
+/** Foot Note **/
+body.path-blocks-lp_hierarchy form.manage-hierarchy .foot-note { clear: both; padding: 2em 20%; text-align: center; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy .foot-note h3 { margin-top: 0.5em; }
+body.path-blocks-lp_hierarchy form.manage-hierarchy .foot-note span { display: block; padding: 0.5em 1em; text-align: left; background: #EEE none; border: 1px solid #CCC; }
+
+/** Button States **/
+body.path-blocks-lp_hierarchy form.manage-hierarchy fieldset .felement button:hover {
+    border-color: #666;
+    }

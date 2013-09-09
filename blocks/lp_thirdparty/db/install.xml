@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/lp_thirdparty/db" VERSION="20120914" COMMENT="XMLDB file for Moodle blocks/lp_thirdparty"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="lp_work_queue" COMMENT="Table of work queue for thirdparty auth" NEXT="lp_email_linker">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="id of user" PREVIOUS="id" NEXT="createdate"/>
+        <FIELD NAME="createdate" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Date of creation" PREVIOUS="userid" NEXT="moddate"/>
+        <FIELD NAME="moddate" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Modified date" PREVIOUS="createdate" NEXT="modid"/>
+        <FIELD NAME="modid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="User id of modifier" PREVIOUS="moddate" NEXT="req_attention"/>
+        <FIELD NAME="req_attention" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" COMMENT="Status of request 0=process;1=attention_req'd;2=ignored" PREVIOUS="modid" NEXT="st_freetext"/>
+        <FIELD NAME="st_freetext" TYPE="text" LENGTH="big" NOTNULL="true" SEQUENCE="false" COMMENT="Freetext entry from the signup form entered by the user" PREVIOUS="req_attention"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_create" UNIQUE="false" FIELDS="createdate" NEXT="idx_create_req"/>
+        <INDEX NAME="idx_create_req" UNIQUE="false" FIELDS="createdate, req_attention" PREVIOUS="idx_create"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="lp_email_linker" COMMENT="List of email domains linked to hierarchy entries" PREVIOUS="lp_work_queue">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="hierarchyid"/>
+        <FIELD NAME="hierarchyid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Id of the hierarchy level to bind the domains to" PREVIOUS="id" NEXT="domains"/>
+        <FIELD NAME="domains" TYPE="text" LENGTH="big" NOTNULL="true" SEQUENCE="false" COMMENT="Email domains to be linked to the hierarchy" PREVIOUS="hierarchyid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

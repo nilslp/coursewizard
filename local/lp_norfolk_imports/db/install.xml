@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/lp_norfolk_imports/db" VERSION="20130227" COMMENT="XMLDB file for Moodle local/lp_norfolk_imports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="lp_norfolk_data" COMMENT="where csv is imported" NEXT="lp_norfolk_lookup">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="username"/>
+        <FIELD NAME="username" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="email"/>
+        <FIELD NAME="email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="username" NEXT="hierarchy_level_1"/>
+        <FIELD NAME="hierarchy_level_1" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="email" NEXT="hierarchy_level_2"/>
+        <FIELD NAME="hierarchy_level_2" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="hierarchy_level_1" NEXT="firstname"/>
+        <FIELD NAME="firstname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="hierarchy_level_2" NEXT="lastname"/>
+        <FIELD NAME="lastname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="firstname" NEXT="existing_user_id"/>
+        <FIELD NAME="existing_user_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="lastname" NEXT="datecreated"/>
+        <FIELD NAME="datecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="existing_user_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="lp_norfolk_lookup" COMMENT="Lookup data for hierarchy" PREVIOUS="lp_norfolk_data">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="hierarchy_level_1"/>
+        <FIELD NAME="hierarchy_level_1" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="hierarchy_level_2"/>
+        <FIELD NAME="hierarchy_level_2" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="hierarchy_level_1" NEXT="hierarchyid"/>
+        <FIELD NAME="hierarchyid" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="hierarchy_level_2"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

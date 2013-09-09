@@ -1,0 +1,31 @@
+/*
+ * Lp SCHEDULAR CSS FILE 
+ * @autor Rachael Harkin at Learning Pool 
+ * @Description : stylesheet for Course Access Manager can be
+ * redistrubuted under the GNU General Public License.
+ * 
+ */
+
+
+/*====================
+ Alignment of elements use the right and left
+ classes for positioning in column layout. 
+====================*/
+.left { float: left; padding: 0 5px; }
+.right { float: right; }
+.grey { color: #ccc; }
+
+/*====Jquery classes===*/
+.hide, .hidden-cat { display: none; }
+.show { display: block; }
+/*====================*/
+
+/**=
+* buttons**/
+
+#page-admin-local-lpscheduler-index .singlebutton {margin-bottom:10px;text-align:center;}
+
+#page-admin-local-dlelegacytools-lpscheduler-index .fitem {border-bottom:1px solid #ccc;padding:2px;}
+#page-admin-local-dlelegacytools-lpscheduler-index .fitemtitle {width:350px;margin-right:20px;text-align:left;}
+
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/lp_charts/db" VERSION="2012022100" COMMENT="XMLDB file for Moodle blocks/lp_charts">
+<TABLES>
+    <TABLE NAME="lp_chart" COMMENT="Holds the attributes required to generate charts" NEXT="lp_chart_columns">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="shortname"/>
+            <FIELD NAME="shortname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="fullname"/>
+            <FIELD NAME="fullname" TYPE="char" LENGTH="1024" NOTNULL="true" SEQUENCE="false" PREVIOUS="shortname" NEXT="description"/>
+            <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="fullname" NEXT="sql_query"/>
+            <FIELD NAME="sql_query" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" PREVIOUS="description" NEXT="chart_type"/>
+            <FIELD NAME="chart_type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="sql_query" NEXT="is_date_based" />
+            <FIELD NAME="is_date_based" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" NEXT="hidden" PREVIOUS="chart_type"/>
+            <FIELD NAME="hidden" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="is_date_based"/>
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="shortname-UNIQUE"/>
+            <KEY NAME="shortname-UNIQUE" TYPE="unique" FIELDS="shortname" PREVIOUS="primary"/>           
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="lp_chart_columns" COMMENT="Holds the columns associated with charts" PREVIOUS="lp_chart" NEXT="lp_chart_schedule">
+    	<FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="chartid"/>
+            <FIELD NAME="chartid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
+            <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="chartid" NEXT="label"/>
+            <FIELD NAME="label" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="name" NEXT="type"/>
+            <FIELD NAME="type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="label" NEXT="axis"/>
+            <FIELD NAME="axis" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" PREVIOUS="type" />
+	</FIELDS>
+	<KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" />          
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="lp_chart_schedule" COMMENT="Holds details of the charts that are scheduled for email" PREVIOUS="lp_chart_columns" NEXT="lp_chart_schedule_recipient">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="chartid"/>
+            <FIELD NAME="chartid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="schedule_type"/>
+            <FIELD NAME="schedule_type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="chartid" NEXT="chart_interval"/>            
+            <FIELD NAME="chart_interval" TYPE="char" LENGTH="1024" NOTNULL="false" SEQUENCE="false" PREVIOUS="schedule_type"/>
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="chartid-FK"/>
+            <KEY NAME="chartid-FK" TYPE="foreign" FIELDS="chartid" REFTABLE="lp_chart" REFFIELDS="id" PREVIOUS="primary"/>
+        </KEYS>
+    </TABLE>
+    <TABLE NAME="lp_chart_schedule_recipient" COMMENT="Stores details of recipients who " PREVIOUS="lp_chart_schedule">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="chartscheduleid"/>
+            <FIELD NAME="chartscheduleid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>
+            <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" PREVIOUS="chartscheduleid" />
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="chartscheduleid-FK"/>
+            <KEY NAME="chartscheduleid-FK" TYPE="foreign" FIELDS="chartscheduleid" REFTABLE="lp_chart_schedule" REFFIELDS="id" PREVIOUS="primary" NEXT="userid-FK"/>
+            <KEY NAME="userid-FK" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="chartscheduleid-FK"/>
+      </KEYS>
+    </TABLE>
+</TABLES>
+</XMLDB>

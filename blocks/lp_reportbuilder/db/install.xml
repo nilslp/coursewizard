@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/reportbuilder/db" VERSION="20100817" COMMENT="XMLDB file for Report Builder local module"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="report_builder" COMMENT="Each report has an entry here" NEXT="report_builder_columns">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="ID of the table" NEXT="fullname"/>
+        <FIELD NAME="fullname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Title of report, displayed on page and used to refer to a report instance" PREVIOUS="id" NEXT="shortname"/>
+        <FIELD NAME="shortname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Unique shortname used internally as a unique way of identifying a report" PREVIOUS="fullname" NEXT="source"/>
+        <FIELD NAME="source" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Data source on which the report is based" PREVIOUS="shortname" NEXT="hidden"/>
+        <FIELD NAME="hidden" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="If set to 1, report not shown on My Reports page but still accessible at URL" PREVIOUS="source" NEXT="accessmode"/>
+        <FIELD NAME="accessmode" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Controls how access to the report is determined" PREVIOUS="hidden" NEXT="contentmode"/>
+        <FIELD NAME="contentmode" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Controls how the content of the report is determined" PREVIOUS="accessmode" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Description of the report" PREVIOUS="contentmode" NEXT="recordsperpage"/>
+        <FIELD NAME="recordsperpage" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="25" SEQUENCE="false" ENUM="false" COMMENT="Number of records to show on a single page of results for this report" PREVIOUS="description" NEXT="defaultsortcolumn"/>
+        <FIELD NAME="defaultsortcolumn" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Name of the column (type_value) to use to initially sort the report" PREVIOUS="recordsperpage" NEXT="defaultsortorder"/>
+        <FIELD NAME="defaultsortorder" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="4" SEQUENCE="false" ENUM="false" COMMENT="Integer representing the direction that default sorting should be done" PREVIOUS="defaultsortcolumn" NEXT="embedded"/>
+        <FIELD NAME="embedded" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Indicates whether the report is an embedded report. Set to 1 for embedded, 0 otherwise." PREVIOUS="defaultsortorder" NEXT="showinblock" />
+        <FIELD NAME="showinblock" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="If set to 1, report shown on the My Reports block" PREVIOUS="embedded" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for report builder"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="shortname" UNIQUE="true" FIELDS="shortname" COMMENT="Ensure that shortname remains a unique identifier"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="report_builder_columns" COMMENT="Defines columns belonging to each report" PREVIOUS="report_builder" NEXT="report_builder_filters">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="reportid"/>
+        <FIELD NAME="reportid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the report this column belongs to" PREVIOUS="id" NEXT="type"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Type of column, used with value to identify the column option" PREVIOUS="reportid" NEXT="value"/>
+        <FIELD NAME="value" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Value of column, used with type to identify the column option" PREVIOUS="type" NEXT="heading"/>
+        <FIELD NAME="heading" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Visible heading describing the column to report users" PREVIOUS="value" NEXT="sortorder"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Determines the order that the columns appear in the report" PREVIOUS="heading" NEXT="hidden"/>
+        <FIELD NAME="hidden" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="If none zero then column is hidden from users by default" PREVIOUS="sortorder" NEXT="customheading"/>
+        <FIELD NAME="customheading" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="hidden" COMMENT="Indicates whether the user has customised a heading or if they are still using the default column heading value" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="report_builder_filters" COMMENT="Defines filters belonging to each report" PREVIOUS="report_builder_columns" NEXT="report_builder_settings">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="reportid"/>
+        <FIELD NAME="reportid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the report this column belongs to" PREVIOUS="id" NEXT="type"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Type of filter, used with value to identify the filter option" PREVIOUS="reportid" NEXT="value"/>
+        <FIELD NAME="value" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Value of filter, used with type to identify the filter option" PREVIOUS="type" NEXT="sortorder"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Determines the order that the filters appear in the report" PREVIOUS="value" NEXT="advanced"/>
+        <FIELD NAME="advanced" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="If none zero then the filter is an advanced option" PREVIOUS="sortorder"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="report_builder_settings" COMMENT="Contains settings for individual reports" PREVIOUS="report_builder_filters" NEXT="report_builder_saved">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="reportid"/>
+        <FIELD NAME="reportid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the report the setting belongs to" PREVIOUS="id" NEXT="type"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Component of report builder that the setting is for" PREVIOUS="reportid" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Name of the setting" PREVIOUS="type" NEXT="value"/>
+        <FIELD NAME="value" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Value of the setting" PREVIOUS="name"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="reportid-type-name"/>
+        <KEY NAME="reportid-type-name" TYPE="unique" FIELDS="reportid, type, name" COMMENT="Each setting should only be set once" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="report_builder_saved" COMMENT="Stores saved searches for reports" PREVIOUS="report_builder_settings" NEXT="report_builder_group">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="reportid"/>
+        <FIELD NAME="reportid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the report this saved search belongs to" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="User who saved the search" PREVIOUS="reportid" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="A name describing the saved search" PREVIOUS="userid" NEXT="search"/>
+        <FIELD NAME="search" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Serialized data containing the search details" PREVIOUS="name" NEXT="ispublic"/>
+        <FIELD NAME="ispublic" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="If none zero, the saved search is visible to all users, not just the creator" PREVIOUS="search"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="reportid" UNIQUE="false" FIELDS="reportid" COMMENT="Index on reportid field" NEXT="userid"/>
+        <INDEX NAME="userid" UNIQUE="false" FIELDS="userid" COMMENT="Index on the userid field" PREVIOUS="reportid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="report_builder_group" COMMENT="Defines activity groups" PREVIOUS="report_builder_saved" NEXT="report_builder_group_assign">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Name of the activity group" PREVIOUS="id" NEXT="preproc"/>
+        <FIELD NAME="preproc" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Name of the pre-processor used by this activity group" PREVIOUS="name" NEXT="baseitem"/>
+        <FIELD NAME="baseitem" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Unique reference to the base item for this activity group" PREVIOUS="preproc" NEXT="assigntype"/>
+        <FIELD NAME="assigntype" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Name of the method for assigning activities to this group" PREVIOUS="baseitem" NEXT="assignvalue"/>
+        <FIELD NAME="assignvalue" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Value used by some assign types to store information about assignments" PREVIOUS="assigntype"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="report_builder_group_assign" COMMENT="Assigns activities to groups" PREVIOUS="report_builder_group" NEXT="report_builder_preproc_track">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the group to assign an activity to" PREVIOUS="id" NEXT="itemid"/>
+        <FIELD NAME="itemid" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the item to assign to the group" PREVIOUS="groupid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="groupid-itemid"/>
+        <KEY NAME="groupid-itemid" TYPE="unique" FIELDS="groupid, itemid" COMMENT="Prevent an item being assigned to the same group multiple times" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="report_builder_preproc_track" COMMENT="Stores which items have been preprocessed and when, to avoid processing unchanged items" PREVIOUS="report_builder_group_assign" NEXT="report_builder_schedule">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the group the item belongs to" PREVIOUS="id" NEXT="itemid"/>
+        <FIELD NAME="itemid" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="ID of the item that has been processed" PREVIOUS="groupid" NEXT="lastchecked"/>
+        <FIELD NAME="lastchecked" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Timestamp of when the item was last checked" PREVIOUS="itemid" NEXT="disabled"/>
+        <FIELD NAME="disabled" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="If none zero, the item is disabled, so will no longer be processed. This is used to prevent repeatedly attempting to process items which have a problem." PREVIOUS="lastchecked"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="groupid-itemid"/>
+        <KEY NAME="groupid-itemid" TYPE="unique" FIELDS="groupid, itemid" COMMENT="To prevent an item being tracked twice within the same group" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="report_builder_schedule" COMMENT="Storing details of scheduled reports" PREVIOUS="report_builder_preproc_track" NEXT="report_builder_hierarchy">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="reportid"/>
+        <FIELD NAME="reportid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="reportid" NEXT="savedsearchid"/>
+        <FIELD NAME="savedsearchid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="format"/>
+        <FIELD NAME="format" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="savedsearchid" NEXT="frequency"/>
+        <FIELD NAME="frequency" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="format" NEXT="schedule"/>
+        <FIELD NAME="schedule" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="frequency" NEXT="nextreport"/>
+        <FIELD NAME="nextreport" TYPE="int" LENGTH="10" DEFAULT="0" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="schedule" NEXT="createdby"/>
+        <FIELD NAME="createdby" TYPE="int" LENGTH="10" DEFAULT="0" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="nextreport" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" DEFAULT="0" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="createdby" NEXT="onbehalfof"/>
+        <FIELD NAME="onbehalfof" TYPE="int" LENGTH="1" DEFAULT="0" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated"/>        
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="report_builder_hierarchy" COMMENT="Storing the allowed hierarchy access of any report_admin users" PREVIOUS="report_builder_schedule" NEXT="report_builder_module_comp">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="hierarchyid"/>
+        <FIELD NAME="hierarchyid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="showchildren"/>
+        <FIELD NAME="showchildren" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="hierarchyid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for report_builder_hierarchy" />
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userid" UNIQUE="false" FIELDS="userid" COMMENT="Index on user column for performance reasons"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="report_builder_module_comp" COMMENT="Intermediate table for module completions" PREVIOUS="report_builder_hierarchy" NEXT="report_builder_scorm_comp">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="courseid" NEXT="timestart"/>
+        <FIELD NAME="timestart" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="timeend"/>
+        <FIELD NAME="timeend" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timestart" NEXT="hierarchyid"/>
+        <FIELD NAME="hierarchyid" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="timeend" NEXT="level1"/>
+        <FIELD NAME="level1" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="hierarchyid" NEXT="level2"/>
+        <FIELD NAME="level2" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="level1" NEXT="level3"/>
+        <FIELD NAME="level3" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="level2" NEXT="level4"/>
+        <FIELD NAME="level4" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="level3" NEXT="level5"/>
+        <FIELD NAME="level5" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="level4" NEXT="deleted"/>
+        <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="level5" NEXT="moduleid"/>
+        <FIELD NAME="moduleid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="deleted" NEXT="moduleinstance"/>
+        <FIELD NAME="moduleinstance" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="moduleid" NEXT="completionstate"/>
+        <FIELD NAME="completionstate" TYPE="number" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" ENUM="false" PREVIOUS="moduleinstance" NEXT="moduletype"/>
+        <FIELD NAME="moduletype" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="completionstate" NEXT="viewed"/>
+        <FIELD NAME="viewed" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="moduletype" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="viewed" NEXT="completionenabled"/>
+        <FIELD NAME="completionenabled" TYPE="int" LENGTH="1" SEQUENCE="false" NOTNULL="false" ENUM="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for report_builder_module_comp" />        
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="user_course_mod_start_uix" UNIQUE="true" FIELDS="userid,courseid,moduleid,timestart" COMMENT="unique index for this summary"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="report_builder_scorm_comp" COMMENT="Intermediate table for scorm completions" PREVIOUS="report_builder_module_comp" NEXT="report_builder_course_comp">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="scormid"/>
+        <FIELD NAME="scormid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="scoid"/>
+        <FIELD NAME="scoid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="scormid" NEXT="attempt"/>
+        <FIELD NAME="attempt" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="scoid" NEXT="score"/>
+        <FIELD NAME="score" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="attempt" NEXT="starttime"/>
+        <FIELD NAME="starttime" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="score" NEXT="totaltime"/>
+        <FIELD NAME="totaltime" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="starttime" NEXT="timecomplete"/>
+        <FIELD NAME="timecomplete" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="totaltime" NEXT="status"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="255" SEQUENCE="false" ENUM="false" NOTNULL="false" PREVIOUS="timecomplete" NEXT="lastaccess"/>
+        <FIELD NAME="lastaccess" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="status"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for report_builder_scorm_completions" />        
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="user_scorm_sco_attempt_uix" UNIQUE="true" FIELDS="userid,scormid,scoid,attempt" COMMENT="unique index for this summary"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="report_builder_course_comp" COMMENT="Intermediate table for course completions" PREVIOUS="report_builder_scorm_comp">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="course"/>
+            <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>
+            <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="course" NEXT="completion_status"/>
+            <FIELD NAME="completion_status" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="userid" NEXT="timeaccess"/>
+            <FIELD NAME="timeaccess" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="completion_status" NEXT="timecompleted"/>
+            <FIELD NAME="timecompleted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="timeaccess" NEXT="timestarted"/>
+            <FIELD NAME="timestarted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="timecompleted"/>
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for report_builder_course_comp" />        
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="course_ix" UNIQUE="false" FIELDS="course" NEXT="user_ix"/>
+            <INDEX NAME="user_ix" UNIQUE="false" FIELDS="userid" PREVIOUS="course_ix" NEXT="completion_status_ix"/>
+            <INDEX NAME="completion_status_ix" UNIQUE="false" FIELDS="completion_status" PREVIOUS="user_ix" />
+        </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
