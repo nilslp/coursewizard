@@ -1,17 +1,71 @@
+/* General */
+.hide{
+	display: none;
+	}
+.show{
+	display: block;
+	}
+
+#wizard-wrapper p{
+	font-size: 80%;
+	}
+
+#wizard-wrapper h1,
+#wizard-wrapper h2,
+#wizard-wrapper h3,
+#wizard-wrapper h4,
+#wizard-wrapper h5,
+#wizard-wrapper h6{
+	color: #777;
+	font-weight: bold;
+	}
+
+#wizard-wrapper h2{
+	font-size: 160%;
+	}
+
+#wizard-wrapper h3{
+	color: #FFF;
+	font-size: 100%;
+	}
+
+#wizard-wrapper a.help,
+#wizard-wrapper a.help:hover{
+	color: #FFF;
+	font-size: 90%;
+	font-weight: normal;
+	}
+
+#wizard-wrapper span.form-step{
+	display: none;
+	}
+
 /* ------------------------------------------------------------------- */
 /* Wizard
 /* ------------------------------------------------------------------- */
 
-#wizard-toggle-button{
-	background: #F30 url(images/bg_launch-wizard-button.png) no-repeat 90% center;
+#wizard-toggle-button,
+#publish-button{
+	background: #F30 url([[pix:local_lp_coursewizard|launch_wizard]]) no-repeat 95% center;
+	color: #FFF;
 	cursor: pointer;
-	line-height: 60px;
-	/*position: absolute;*/
+	display: block;
+	line-height: 40px;
+	margin-bottom: 10px;
+	padding: 4%;
 	right: 0;
-	text-indent: 18px;
-	/*top: 395px;*/
-	width: 200px;
+	width: 92%;
 	}
+
+#publish-button{
+	background: #390 url([[pix:local_lp_coursewizard|publish_button]]) no-repeat 80% center;
+	padding: 12% 4%;
+	}
+
+	#publish-button:hover{
+		background-color: #2D9300;
+		}
+
 	
 	#wizard-toggle-button:hover{
 		background-color: #DF2300;
@@ -39,14 +93,14 @@
 	
 #wizard-wrapper{
 	background: #999;
-	bottom: -330px;
-	height: 500px;
+	bottom: -400px;
+	height: 370px;
 	left: 0;
-	/* overflow: scroll; Remove after editing */
 	position: fixed;
 	transition: 0.5s ease-in-out 0.1s;
+	-webkit-transform: translateZ(0);
 	width: 100%;
-        z-index: 999;
+	z-index: 10;
 	}	
 
 #wizard-wrapper.visible{
@@ -54,11 +108,13 @@
 	}
 
 #wizard-wrapper.visible.hide{
-	bottom: -270px;
+	bottom: -340px;
+	display: block;
 	}
 	
 #tabs-container{
-	float: left;
+	border-bottom: 2px solid #222;
+	height: 100%;
 	padding: 0;
 	position: relative;
 	width: 100%;
@@ -85,13 +141,14 @@ ul#tabs-visibility-controls{
 			}
 
 		ul#tabs-visibility-controls span{
-			background: #999 url(images/bg_tabs-visibility-controls.png) no-repeat right top;
+			background: #999 url([[pix:local_lp_coursewizard|tabs_visibility_controls]]) no-repeat right top;
 			color: #333;
 			cursor: pointer;
 			display: block;
 			font-weight: bold;
 			line-height: 30px;
-			text-indent: -9999px;
+			overflow: hidden;
+			text-indent: -300px;
 			transition: 0.1s ease-in-out 0.1s; 
 			width: 30px;
 			}
@@ -126,60 +183,72 @@ ul#tabs-visibility-controls{
 	width: 100%;
 	}
 
-ul#tab-nav{
+#wizard-wrapper ul.steps{
 	background: #555;
 	border-bottom: 2px solid #222;
-	float: left;
 	height: 30px;
+	text-align: left;
 	width: 100%;
 	}
 
-	ul#tab-nav li{
-		background: url(images/bg_tab-nav.png) no-repeat right -125px;
+	#wizard-wrapper ul.steps li{
+		background: url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat right -125px transparent;
+		border-radius: 0;
+		border-right: none;
 		display: inline-block;
-		float: left;
+		/*float: left;*/
 		list-style: none;
-		margin-left: -10px;
+		margin-left: -13px;
+		padding: 0 10px 0 0;
+		top: 0;
 		width: auto;
 		}
-		
-		ul#tab-nav li:hover{
-			background: #444 url(images/bg_tab-nav.png) no-repeat right -165px;
+	
+		#wizard-wrapper ul.steps li:hover{
+			background: #444 url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat right -165px;
 			}
 		
-		ul#tab-nav li.ui-state-active + li a:hover{
-			background: #444 url(images/bg_tab-nav.png) no-repeat left -245px;
+		#wizard-wrapper ul.steps li:hover a{
+			background: #444 url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat left -205px;
+			}
+
+		#wizard-wrapper ul.steps li.selected{
+			/*background: url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat left -85px;*/
 			}
 		
-		ul#tab-nav li:hover a{
-			background: #444 url(images/bg_tab-nav.png) no-repeat left -205px;
-			margin-left: 0;
-			padding-left: 40px;
-			}
-			
-		ul#tab-nav li.ui-state-active{
-			background: url(images/bg_tab-nav.png) no-repeat left -85px;
+		#wizard-wrapper ul.steps li.selected{
+			background: #333 url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat right -45px;
+			cursor: default;
 			}
 				
-			ul#tab-nav li.ui-state-active:hover a {
-				margin-left: 10px;
-				padding-left: 30px;
-				}
-				
-		ul#tab-nav li a{
-			line-height: 30px;
-			margin: 0 10px;
-			padding: 0 30px;
-			text-align: center;
-			}
-			
-			ul#tab-nav li.ui-state-active a{
-				background: #333 url(images/bg_tab-nav.png) no-repeat right -45px;
-				margin-right: 0;
-				padding-right: 40px;
+			#wizard-wrapper ul.steps li.selected:hover a {
+				background-color: transparent;
+				cursor: default;
 				}
 
-			ul#tab-nav li a .step-number{
+			#wizard-wrapper ul.steps li.selected a{
+				background: url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat left -5px;
+				cursor: default;
+				}
+
+			#wizard-wrapper ul.steps li.selected + li:hover a{
+				background: url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat left -245px;
+				}
+			
+			#wizard-wrapper ul.steps li:hover + li.selected a{
+				background: url([[pix:local_lp_coursewizard|tab_nav]]) no-repeat left -285px;
+				}
+				
+		#wizard-wrapper ul.steps li a{
+			color: #FFF;
+			display: block;
+			line-height: 30px;
+			margin: 0 10px 0 0;
+			padding: 0 20px 0 30px;
+			text-align: center;
+			}
+
+			#wizard-wrapper ul.steps li a .step-number{
 				background: #FFF;
 				border-radius: 20px;
 				color: #555;
@@ -189,12 +258,12 @@ ul#tab-nav{
 				text-align: center;
 				}
 				
-				ul#tab-nav li.ui-state-active a .step-number{
+				#wizard-wrapper ul.steps li.selected a .step-number{
 					color: #333;
 					}
 					
-				ul#tab-nav li.first .step-number,
-				ul#tab-nav li.last .step-number{
+				#wizard-wrapper ul.steps li.first .step-number,
+				#wizard-wrapper ul.steps li.last .step-number{
 					display: block;
 					float: left;
 					height: 20px;
@@ -202,13 +271,108 @@ ul#tab-nav{
 					width: 10px;
 					}
 			
-				ul#tab-nav li.first .step-number{
+				#wizard-wrapper ul.steps li.first .step-number{
 					background: url(images/bg_tab-icons.png) no-repeat center bottom;
 					}
 
-				ul#tab-nav li.last .step-number{
+				#wizard-wrapper ul.steps li.last .step-number{
 					background: url(images/bg_tab-icons.png) no-repeat center top;
 					}
+
+/* */
+
+#wizard-wrapper .tabs-content p{
+	color: #FFF;
+	}
+
+#wizard-wrapper .tabs-content table th,
+#wizard-wrapper .tabs-content table td{
+	color: #FFF;
+	vertical-align: middle;
+	}
+
+#wizard-wrapper .tabs-content table tbody tr:hover > td,
+#wizard-wrapper .tabs-content table tbody tr:hover > th{
+	color: #000;
+	}
+
+#wizard-wrapper .tabs-content table td:last-child{
+	/*text-align: right;*/
+	}
+
+#wizard-wrapper .tabs-content ul.tabs{
+	border-top: none;
+	margin-top: 20px;
+	position: relative;
+	text-align: left;
+	}
+
+	#wizard-wrapper .tabs-content ul.tabs li{
+		background: #555;
+		border-right: 1px solid #999;
+		border-radius: 0;
+		color: #FFF;
+		display: inline-block;
+		margin-left: -4px;
+		top: 0;
+		}
+	
+		#wizard-wrapper .tabs-content ul.tabs li:hover,
+		#wizard-wrapper .tabs-content ul.tabs li:hover a{
+			background: #444;
+			}
+
+		#wizard-wrapper .tabs-content ul.tabs li.selected,
+		#wizard-wrapper .tabs-content ul.tabs li.selected,
+		#wizard-wrapper .tabs-content ul.tabs li.selected:hover,
+		#wizard-wrapper .tabs-content ul.tabs li.selected a,
+		#wizard-wrapper .tabs-content ul.tabs li.selected:hover a,{
+			background: #333;
+			cursor: default;
+			}
+
+		#wizard-wrapper .tabs-content ul.tabs li:first-child{
+			margin-left: 0;
+			}
+
+		#wizard-wrapper .tabs-content ul.tabs li:first-child,
+		#wizard-wrapper .tabs-content ul.tabs li:last-child{
+			border-radius: 0;
+			}
+
+		#wizard-wrapper .tabs-content ul.tabs li a{
+			color: #FFF;
+			}
+
+/* Table: currentresourcestable */
+#wizard-wrapper table.generaltable{
+	display: block;
+	height: 235px;
+	overflow: auto;
+	}
+
+#wizard-wrapper table#resourcecompletiontable{
+	height: 185px;
+	}
+
+#wizard-wrapper table#unenrolledusertable{
+	height: 193px;
+	}
+
+#wizard-wrapper select,
+#wizard-wrapper input[type="text"],
+#wizard-wrapper textarea{
+	border: none;
+	margin-bottom: 10px;
+	}
+
+#wizard-wrapper select#sectionSelect{
+	margin-bottom: 0;
+	}
+
+#wizard-wrapper form#upload_scorm{
+	padding: 15px;
+	}
 
 /* ------------------------------------------------------------------- */
 /* Tab Content General
@@ -216,39 +380,56 @@ ul#tab-nav{
 
 #tab-content{
 	float: left;
+	height: 100%;
 	padding: 0 1%;
 	width: 98%;
 	}
 
 .tab-page{
-	clear: both; /* Remove after editing */
-	/* display: none; Remove after editing */
-	float: left;
-	height: 250px; /* Remove after editing */
 	position: relative;
 	width: 100%;
 	}
 	
 .region{
 	border-right: 1px solid #888;
-	float: left;
-	height: 180px;
-	margin: 20px 2% 0 0;
+	display: inline-block;
+	height: 300px;
+	margin: 20px 0;
 	padding: 0 1%;
 	position: relative;
-	width: 20%;
+	vertical-align: top;
+	width: 18%;
 	}
+
+.region-three{
+	width: 57%;
+	}
+
+	#tab5 .region-three{
+		width: 18%;
+		}
 	
 .sub-region{
-    border-right: 1px solid #888888;
-    float: left;
-    margin-right: 4%;
+    /*border-right: 1px solid #888888;*/
+    display: inline-block;
+    /*margin-right: 4%;*/
+    padding: 0 1%;
+    vertical-align: top;
     width: 30%;
 	}
 
 .sub-region.last{
     margin-right: 0;
 	}
+
+	.form-field{
+		margin-bottom: 10px;
+		}
+
+		.form-field .form-field{
+			margin-bottom: 0;
+			}
+
 
 a.help{
 	background: #333;
@@ -257,7 +438,7 @@ a.help{
     height: 20px;
 	line-height: 21px;
     position: absolute;
-    right: -5%;
+    right: 0;
 	text-align: center;
     top: 0;
     width: 20px;
@@ -286,30 +467,40 @@ a.help{
 /* Region Two
 /* ------------------------------------------------------------------- */
 
-table{
+#wizard-wrapper table{
 	text-align: center;
-	width: 90%;
+	width: 100%;
 	}
 	
-table thead tr{
+#wizard-wrapper table thead tr{
 	background: #999;
 	height: 20px;
 	}
+#wizard-wrapper table thead th{
+	font-weight: normal;
+	}
 
-table tr{
+#wizard-wrapper table tr{
 	height: 30px
 	}
 
-table td{
+#wizard-wrapper table td{
 	color: #369C10;
 	}
 
-table td.incomplete{
+#wizard-wrapper table td.incomplete{
 	color: #c00;
 	font-weight: bold;
 	}
 
-table .number{
+#wizard-wrapper table td.td_icon{
+	padding-left: 0;
+	padding-right: 0;
+	text-align: center;
+	width: 35px;
+	}
+
+#wizard-wrapper table .number{
  	background:#333;
     border-radius: 12px;
     color: #FFF;
@@ -376,9 +567,9 @@ colgroup col.content{
 /*
 Add an activity or resource
 */
-div#tab3 div.region-two{
+/*div#tab3 div.region-two{
     width:10%;
 }
 div#tab3 div.region-three{
     width:55%;
-}
+}*/

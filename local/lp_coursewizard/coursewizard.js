@@ -2,9 +2,33 @@ M.local_lp_coursewizard = {};
 
 M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
 
-    //global variable
-    var currentResource;//the currently selected resource
-    var ajaxloading = false;//if an ajax request is currently running
+    //global variables
+    var currentResource;        //the currently selected resource
+    var ajaxloading = false;    //if an ajax request is currently running
+    var currentTab = 'tab2';    //set default tab as tab2
+    
+    //page elements
+    var wrapper = Y.one('#wizard-wrapper');
+    var togglebutton = Y.one('#wizard-toggle-button');
+    var btncreatecourse = Y.one('#create-course');
+    var sectionselect = Y.one('#sectionSelect');
+    var resourceuploadinput = Y.one('input#upload-resource');
+    var scormuploadinput = Y.one('input#upload-scorm');
+    var resourcetable = Y.one('table#currentresourcestable');
+    var updateModuleButtons = Y.all('input.btn_update_resource');
+    var scormCompletionSelect = Y.one('#scorm-completion-container');
+    var resourceCompletionSelect = Y.one('#resource-completion-container');
+    var tabaddscorm = Y.one('#theTabScorm');
+    var tabaddfile = Y.one('#theTabFile');
+    var btnsavecompletion = Y.one('#save-completion');
+    var enrolledusertable = Y.one('#enrolledusertable');
+    var unenrolledusertable = Y.one('#unenrolledusertable');
+    var btnenrolusers = Y.one('#btn-enrol-users');
+    var btnpublishcourse = Y.one('#publish-button');
+    var tabControls = Y.all('div#tabs-container ul.tabs li');
+    var minimiseBtn = Y.one('#tabs-visibility-controls li#hide');
+    var closeBtn = Y.one('#tabs-visibility-controls li#close');
+
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////AJAX Functions ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -68,14 +92,14 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
     /*
      * function to toggle visibility of groups or pairs of elements
      */
-    function showHide(show,hide,all){
+    function showHide(showelement,hideelement,all){
         if(all){
-            Y.all(show).setStyle('display', 'block');
-            Y.all(hide).setStyle('display', 'none');
+            Y.all(showelement).removeClass('hide').addClass('show');
+            Y.all(hideelement).removeClass('show').addClass('hide');
         }
         else{
-            Y.one(show).setStyle('display', 'block');
-            Y.one(hide).setStyle('display', 'none');
+            Y.one(showelement).removeClass('hide').addClass('show');
+            Y.one(hideelement).removeClass('show').addClass('hide');
         }
     }
     /*
@@ -94,10 +118,10 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
     }
     
     function showError(action, message){
-        Y.all('.ajax_notification_'+action).empty().append(message).removeClass('success').addClass('error').setStyle('display', 'block');
+        Y.all('.ajax_notification_'+action).empty().append(message).removeClass('success').addClass('error').addClass('show');
     }
     function showNotification(action, message){
-        Y.all('.ajax_notification_'+action).empty().append(message).removeClass('error').addClass('success').setStyle('display', 'block');
+        Y.all('.ajax_notification_'+action).empty().append(message).removeClass('error').addClass('success').addClass('show');
     }
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////// END Business Functions ///////////////////////////////////
@@ -107,7 +131,6 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
 /////////////////////Tab 1 Functions ///////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-    var btncreatecourse = Y.one('#create-course');
     btncreatecourse && btncreatecourse.on('click',function(){
         if(!ajaxloading){
             var action = 'createcourse';
@@ -142,23 +165,21 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
 ////////////////////////////////////////////////////////////////////////////////
 
     //handle selection change and show corresponding resources (if any)
-    var sectionselect = Y.one('#sectionSelect');
     sectionselect && sectionselect.on('change',function(){
-        Y.all('table#currentresourcestable tr').setStyle('display', 'none');
+        Y.all('table#currentresourcestable tr').addClass('hide');
         var selected = getSelectValue(this);
-        Y.all('table#currentresourcestable tr.section_'+selected).setStyle('display', 'block');
-        Y.one('#scorm-content').setStyle('display', 'none');
-        Y.one('#resource-content').setStyle('display', 'none');
+        Y.all('table#currentresourcestable tr.section_'+selected).addClass('show');
+        Y.one('#scorm-content').addClass('hide');
+        Y.one('#resource-content').addClass('hide');
     });
     
     //handle file selection and upload the file once a file is selected
-    var resourceuploadinput = Y.one('input#upload-resource');
     resourceuploadinput && resourceuploadinput.on('change',function(){
         if(!ajaxloading){
             uploadResource('resource');
         }
     });
-    var scormuploadinput = Y.one('input#upload-scorm');
+    
     scormuploadinput && scormuploadinput.on('change',function(){
         if(!ajaxloading){
             uploadResource('scorm');
@@ -228,16 +249,15 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
             showError("upload", response.error);
         }
         ajaxEnd('upload');
-        Y.one('#fileuploadcontainer').setStyle('display', 'none');
-        Y.one('#scormuploadcontainer').setStyle('display', 'none');
-        Y.one('#theTabFile').setStyle('display', 'none');
-        Y.one('#theTabScorm').setStyle('display', 'none');
+        Y.one('#fileuploadcontainer').addClass('hide');
+        Y.one('#scormuploadcontainer').addClass('hide');
+        Y.one('#theTabFile').addClass('hide');
+        Y.one('#theTabScorm').addClass('hide');
     };
     
     //resource item click
     //this click will fire an ajax request to the server to 
     //bring back all the details for the selected module
-    var resourcetable = Y.one('table#currentresourcestable');
     resourcetable && resourcetable.delegate('click',function(e){
         if(!ajaxloading){
             var button = e.currentTarget;
@@ -266,7 +286,7 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
         }
     },'.btn_edit_mod');
     
-    var updateModuleButtons = Y.all('input.btn_update_resource');
+    
     updateModuleButtons && updateModuleButtons.on('click',function(e){
         if(!ajaxloading){
             var btn = e.currentTarget;
@@ -307,7 +327,7 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
         }
     });
     
-    var scormCompletionSelect = Y.one('#scorm-completion-container');
+    
     scormCompletionSelect && scormCompletionSelect.delegate('change',function(e){
         if(getSelectValue(e.currentTarget) > 1){
             Y.all('#scorm-completion-container input').set('disabled',false);
@@ -319,7 +339,7 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
         }
     },'.sel_completion');
     
-    var resourceCompletionSelect = Y.one('#resource-completion-container');
+    
     resourceCompletionSelect && resourceCompletionSelect.delegate('change',function(e){
         if(getSelectValue(e.currentTarget) > 1){
             Y.all('#resource-completion-container input').set('disabled',false);
@@ -330,34 +350,20 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
         }
     },'.sel_completion');
     
-    //Activity tab click
-    var tabaddactivity = Y.one('#theTabActivity');
-    tabaddactivity && tabaddactivity.on('click',function(){
-        showHide('#theTabScorm','#theTabFile',false);
-        Y.one('#scorm-content').setStyle('display', 'none');
-        Y.one('#resource-content').setStyle('display', 'none');
-    });
+    
     //SCORM tab click
-    var tabaddscorm = Y.one('#theTabScorm');
     tabaddscorm && tabaddscorm.on('click',function(){
         showHide('#scormuploadcontainer','#fileuploadcontainer',false);
-        Y.one('#scorm-content').setStyle('display', 'none');
-        Y.one('#resource-content').setStyle('display', 'none');
+        Y.one('#scorm-content').addClass('hide');
+        Y.one('#resource-content').addClass('hide');
     });
     
-    //Resource tab click
-    var tabaddresource = Y.one('#theTabResource');
-    tabaddresource && tabaddresource.on('click',function(){
-        showHide('#theTabFile','#theTabScorm',false);
-        Y.one('#scorm-content').setStyle('display', 'none');
-        Y.one('#resource-content').setStyle('display', 'none');
-    });
     //File tab click
-    var tabaddfile = Y.one('#theTabFile');
+    
     tabaddfile && tabaddfile.on('click',function(){
         showHide('#fileuploadcontainer','#scormuploadcontainer',false);
-        Y.one('#scorm-content').setStyle('display', 'none');
-        Y.one('#resource-content').setStyle('display', 'none');
+        Y.one('#scorm-content').addClass('hide');
+        Y.one('#resource-content').addClass('hide');
     });
     //END add a file tab
     
@@ -369,7 +375,7 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////// Tab 3 Functions //////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-    var btnsavecompletion = Y.one('#save-completion');
+    
     btnsavecompletion && btnsavecompletion.on('click',function(){
         if(!ajaxloading){
             var oa = Y.one('#id_overall_aggregation').get('value');
@@ -433,7 +439,6 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
         });
     }
     
-    var enrolledusertable = Y.one('#enrolledusertable');
     enrolledusertable && enrolledusertable.delegate('change',function(e){
         var cb = e.currentTarget;
         if(cb.get('id') == 'chkallusr'){
@@ -442,7 +447,7 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
     },
     'input[type="checkbox"]');
     
-    var unenrolledusertable = Y.one('#unenrolledusertable');
+    
     unenrolledusertable && unenrolledusertable.delegate('change',function(e){
         var cb = e.currentTarget;
         if(cb.get('id') == 'chkallusr'){
@@ -451,7 +456,7 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
     },
     'input[type="checkbox"]');
     
-    var btnenrolusers = Y.one('#btn-enrol-users');
+    
     btnenrolusers && btnenrolusers.on('click',function(){
         if(!ajaxloading){
             var usersstring = '';
@@ -492,19 +497,18 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
 ///////////////////////// Tab 5 Functions //////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-    var btnpublishcourse = Y.one('#publish-button');
-    btnpublishcourse && btnpublishcourse.on('click',function(){
-        
+    btnpublishcourse && btnpublishcourse.on('click',function(e){
+        e.preventDefault();
         if(!ajaxloading){
             var category = getSelectValue(Y.one('#categorySelect'));
             var paramstring = 'sesskey='+sesskey+'&ajaxtype=publishcourse&cid='+courseId+'&catid='+category;
             ajaxBegin('publishcourse');
             ajaxRequest(siteurl+'/local/lp_coursewizard/ajax/proxy.php','POST',paramstring,function(response){
                 if(response.success){
-                    showNotification(response.message);
+                    showNotification('publishcourse',response.message);
                 }
                 else{
-                    showError(response.message);
+                    showError('publishcourse',response.message);
                 }
                 ajaxEnd('publishcourse');
             });
@@ -519,41 +523,17 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////  Tab View functions  //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-    YUI().use('history','tabview', function (Y) {
-        var history = new Y.HistoryHash();
-        var tabview = new Y.TabView({
-            srcNode: '#tabs-container'
-        });
-        tabview.render();
-        // Set the selected tab to the history state
-        tabview.selectChild(history.get('tab') || 0);
 
-        // Save state after tab selection
-        tabview.after('selectionChange', function (e) {
-            // If the new tab index is greater than 0, set the "tab"
-            // state value to the index. Otherwise, remove the "tab"
-            // state value by setting it to null (this reverts to the
-            // default state of selecting the first tab).
-            history.addValue('tab', e.newVal.get('index') || null);
-        });
-        // back/forward navigation or URL changes
-        Y.on('history:change', function (e) {
-            // Ignore changes we make ourselves, since we don't need
-            // to update the selection state for those. We're only
-            // interested in outside changes, such as the ones generated
-            // when the user clicks the browser's back or forward buttons.
-            if (e.src === Y.HistoryHash.SRC_HASH) {
-                if (e.changed.tab) {
-                    // The new state contains a different tab selection, so
-                    // change the selected tab.
-                    tabview.selectChild(e.changed.tab.newVal);
-                } else if (e.removed.tab) {
-                    // The tab selection was removed in the new state, so
-                    // select the first tab by default.
-                    tabview.selectChild(0);
-                }
-            }
-        });
+    tabControls && tabControls.on('click',function(e){
+        var tab = e.currentTarget;
+        wrapper.removeClass('hide');        
+        tabControls.removeClass('selected');
+        tab.addClass('selected');
+        var target = tab.get('id');
+        if(target !== 'tab1' && currentTab !== target){
+            showHide('div#tabs-container div.tabs-content div#'+target,'div#tabs-container div.tabs-content div#'+currentTab);
+            currentTab = target;
+        }
     });
     
 ////////////////////////////////////////////////////////////////////////////////
@@ -561,9 +541,7 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
 ////////////////////////////////////////////////////////////////////////////////
         
         
-        //used to show/hide the wizard
-    var togglebutton = Y.one('#wizard-toggle-button');
-    var wrapper = Y.one('#wizard-wrapper');
+    //used to show/hide the wizard
     togglebutton && togglebutton.on('click',function(){
         wrapper.toggleClass('visible').removeClass('hide');
         if(wrapper.hasClass('visible')){
@@ -572,6 +550,24 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
         else{
             togglebutton.set('text', 'Launch Course Wizard').removeClass('active');
         }
+    });
+    //end toggle button
+
+    //used to show/hide the wizard
+    closeBtn && closeBtn.on('click',function(){
+        wrapper.toggleClass('visible').removeClass('hide');
+        if(wrapper.hasClass('visible')){
+            togglebutton.set('text', 'Close Course Wizard').addClass('active');
+        }
+        else{
+            togglebutton.set('text', 'Launch Course Wizard').removeClass('active');
+        }
+    });
+    //end toggle button
+
+    //used to minimise the wizard
+    minimiseBtn && minimiseBtn.on('click',function(){
+        wrapper.toggleClass('hide');
     });
     //end toggle button
 };

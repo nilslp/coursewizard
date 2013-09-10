@@ -61,7 +61,7 @@ function local_lp_coursewizard_init(){
     $jsconfig = array(
         'name' => 'local_lp_coursewizard',
         'fullpath' => '/local/lp_coursewizard/coursewizard.js',
-        'requires' => array('node','selector-css3','io','json-parse','json-stringify','widget','uploader')
+        'requires' => array('node','selector-css3','io','json-parse','json-stringify','widget')
     );
 
     $PAGE->requires->js_init_call('M.local_lp_coursewizard.init', array('sesskey'=>$USER->sesskey,'siteurl'=>$CFG->wwwroot,'courseId'=>$id), false, $jsconfig);
@@ -123,19 +123,19 @@ function local_lp_coursewizard_html() {
         </ul>
 
         <div id="tabs-container">
-            <ul>
+            <ul class="tabs steps">
                 <?php if(!$coursewiz){?>
                 <!--<li id="thetab1"><a href="#tab1"><span class="step-number"></span>Overview</a></li>-->
-                <li id="thetab2"><a href="#tab2"><span class="step-number">1</span>Create a Course</a></li>
+                <li id="tab1" class="selected"><a href="#tab1">Create a Course</a></li>
                 <?php }else{ ?>
-                    <li id="thetab3"><a href="#tab3"><span class="step-number">2</span>Add an Activity or Resource</a></li>
-                    <li id="thetab4"><a href="#tab4"><span class="step-number">3</span>Course Completion</a></li>
-                    <li id="thetab5"><a href="#tab5"><span class="step-number">4</span>Enrolment</a></li>
-                    <li id="thetab6"><a href="#tab6"><span class="step-number"></span>Publish</a></li>
+                    <li id="tab2" class="selected"><a href="#tab2"><span class="step-number">1</span>Add an Activity or Resource</a></li>
+                    <li id="tab3"><a href="#tab3"><span class="step-number">2</span>Course Completion</a></li>
+                    <li id="tab4"><a href="#tab4"><span class="step-number">3</span>Enrolment</a></li>
+                    <li id="tab5"><a href="#tab5"><span class="step-number">4</span>Publish</a></li>
                 <?php } ?>
                 <!-- style="display:none;"-->
             </ul>
-            <div>
+            <div class="tabs-content">
                 <?php 
                 //echo local_lp_coursewizard_overview_tab();
                 if(!$coursewiz){
@@ -304,14 +304,10 @@ function local_lp_coursewizard_overview_tab(){
 function local_lp_coursewizard_createcourse_tab($title, $desc, $summary, $saved_state){
     global $CFG;
     
-    $hide = '';
-    if($saved_state){
-        $hide = 'style="display:none;"';
-    }
     $output = '';
     $output .= '
         <!----------------- Create a course tab ----------------->
-        <div class="tab-page" id="tab2" role="tabpanel">
+        <div class="tab-page" id="tab1">
 
             <div class="region region-one first">
                 <h2>'.get_string('createcourseheading','local_lp_coursewizard').'</h2>
@@ -338,16 +334,14 @@ function local_lp_coursewizard_createcourse_tab($title, $desc, $summary, $saved_
                     <span class="form-step">C</span>
                     <textarea id="course-summary" placeholder="Add a short summary">'.$summary.'</textarea>
                 </div> 
-            </div>
-
-            <div class="region region-four last">
                 <div class="form-field">
-                    <span '.$hide.' class="form-step">D</span>
-                    <input '.$hide.' type="button" class="submit ajax_starter_createcourse" id="create-course" value="'.get_string('createcoursebuttontext','local_lp_coursewizard').'">
-                    <span style="display:none;" class="ajax_message_createcourse"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Creating course ...</span>
-                    <span style="display:none;" class="ajax_notification_createcourse"></span>
+                    <span class="form-step">D</span>
+                    <input type="button" class="submit ajax_starter_createcourse" id="create-course" value="'.get_string('createcoursebuttontext','local_lp_coursewizard').'">
+                    <span class="hide ajax_message_createcourse"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Creating course ...</span>
+                    <span class="hide ajax_notification_createcourse"></span>
                 </div>
             </div>
+
         </div>
         <!----------------- END Create a course tab ----------------->
     ';
@@ -360,38 +354,35 @@ function local_lp_coursewizard_addactivity_tab($section_select, $resource_table)
     $output = '';
     $output .= '
          <!----------------- Add and activity or resource tab ----------------->
-        <div class="tab-page" id="tab3" role="tabpanel">
+        <div class="tab-page" id="tab2" role="tabpanel">
 
                 <div class="region region-one first">
                     <h2>'.get_string('addresourceheading','local_lp_coursewizard').'</h2>
                     <p>'.get_string('addresourceselectintro','local_lp_coursewizard').$section_select.'</p>
-                    <ul role="tablist">   
-                        <li id="theTabActivity" role="tab"><a>'.get_string('addresourceactivitytab','local_lp_coursewizard').'</a></li>
-                        <li id="theTabResource" role="tab"><a>'.get_string('addresourceresourcetab','local_lp_coursewizard').'</a></li>
+                    
+                    <ul role="tablist" class="tabs"> 
+                        <li id="theTabScorm"><a>'.get_string('addresourcescormtab','local_lp_coursewizard').'</a></li>
+                        <li id="theTabFile"><a>'.get_string('addresourcefiletab','local_lp_coursewizard').'</a></li>
                     </ul>
-                    <ul role="tablist"> 
-                        <li id="theTabScorm" style="display:none;"><a>'.get_string('addresourcescormtab','local_lp_coursewizard').'</a></li>
-                        <li id="theTabFile" style="display:none;"><a>'.get_string('addresourcefiletab','local_lp_coursewizard').'</a></li>
-                    </ul>
-                    <div class="form-field ajax_starter_uploadscorm" id="scormuploadcontainer" style="display:none;">
-                        <a class="help">?<span>Locate the SCORM file on your computer and upload here</span></a>
+                    <div class="hide form-field ajax_starter_uploadscorm" id="scormuploadcontainer">
+                        <a class="help">?<span>'.get_string('addresourcescormhelp','local_lp_coursewizard').'</span></a>
                         <span class="form-step">A</span>
                         <form id="upload_scorm" enctype="multipart/form-data" method="post">
-                            <label for="upload-scorm">Upload SCORM</label>
+                            <label for="upload-scorm">'.get_string('addresourcescormupload','local_lp_coursewizard').'</label>
                             <input class="ajax_starter_upload" id="upload-scorm" type="file" name="repo_upload_file" value="uploadSCORM">
                         </form>
                     </div>
-                    <div class="form-field ajax_starter_uploadfile" id="fileuploadcontainer" style="display:none;">
-                        <a class="help">?<span>Locate the file on your computer and upload here</span></a>
+                    <div class="hide form-field ajax_starter_uploadfile" id="fileuploadcontainer">
+                        <a class="help">?<span>'.get_string('addresourcefilehelp','local_lp_coursewizard').'</span></a>
                         <span class="form-step">A</span>
                         <form id="upload_resource" enctype="multipart/form-data" method="post">
-                            <label for="upload-resource">Upload File</label>
+                            <label for="upload-resource">'.get_string('addresourcefileupload','local_lp_coursewizard').'</label>
                             <input class="" id="upload-resource" type="file" name="repo_upload_file" value="uploadFile"/>
                             <input name="" type="hidden"/>
                         </form>
                     </div>
-                    <span style="display:none;" class="ajax_message_upload"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Uploading file...</span>
-                    <span style="display:none;" class="ajax_notification_upload"></span>
+                    <span class="hide ajax_message_upload"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Uploading file...</span>
+                    <span class="hide ajax_notification_upload"></span>
                 </div>
                 <!--End region 1-->
 
@@ -403,38 +394,39 @@ function local_lp_coursewizard_addactivity_tab($section_select, $resource_table)
                 
                 <div class="region region-three last">
                 
-                    <div id="scorm-content" style="display:none;">
-                        <div id="scorm-details-container" class="sub-region sub-region-one">
-                            <!--shit will be added here-->
+                    <div id="scorm-content" class="hide">
+                        <div class="sub-region sub-region-one">
+                            <div class="form-field">
+                                <h3>'.get_string('addresourcecompletionheading','local_lp_coursewizard').'</h3>
+                                <div id="scorm-details-container" >
+                                    <!--shit will be added here-->
+                                </div>
+                            </div>
                         </div>
                         <!--end scorm sub-region 1-->
                         
                         <div class="sub-region sub-region-two">
                             <div class="form-field">
-                                <a class="help">?<span>Choose what students must do to complete activity</span></a>
-                                <h3>Activity Completion</h3>
+                                <a class="help">?<span>'.get_string('addresourcecompletionhelp','local_lp_coursewizard').'</span></a>
+                                <h3>'.get_string('addresourcecompletionheading','local_lp_coursewizard').'</h3>
                                 <span class="form-step">D</span>
                                 <div id="scorm-completion-container">
                                 <!--shit will be added here-->
                                 </div>
-                            </div>              
-                        </div>
-                        <!--end scorm sub-region 2-->
-                        
-                        <div class="sub-region sub-region-three last">
+                            </div>
                             <div class="form-field">
                                 <span class="form-step">E</span>
                                 <input type="button" class="submit ajax_starter_saveresource btn_update_resource" id="update-scorm" value="Update SCORM">
-                                <span style="display:none;" class="ajax_message_saveresource"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
-                                <span style="display:none;" class="ajax_notification_saveresource"></span>
+                                <span class="hide ajax_message_saveresource"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
+                                <span class="hide ajax_notification_saveresource"></span>
                             </div>
                         </div>
-                        <!--end scorm sub-region 3-->
+                        <!--end scorm sub-region 2-->
                         
                     </div>
                     <!-- end scorm content -->
                     
-                    <div id="resource-content" style="display:none;">
+                    <div id="resource-content" class="hide">
 						
                         <div id="resource-details-container" class="sub-region sub-region-one">
                             <!--shit will be added here-->
@@ -443,8 +435,8 @@ function local_lp_coursewizard_addactivity_tab($section_select, $resource_table)
 						
                         <div class="sub-region sub-region-two">
                             <div class="form-field">
-                                <a class="help">?<span>Locate the file on your computer and upload here</span></a>
-                                <h3>Resource Completion</h3>
+                                <a class="help">?<span>'.get_string('addresourcefilehelp','local_lp_coursewizard').'</span></a>
+                                <h3>'.get_string('addresourcedetailsheading','local_lp_coursewizard').'</h3>
                                 <span class="form-step">D</span>
                                 <div id="resource-completion-container">
                                 <!--shit will be added here-->
@@ -457,8 +449,8 @@ function local_lp_coursewizard_addactivity_tab($section_select, $resource_table)
                             <div class="form-field">
                                 <span class="form-step">E</span>
                                 <input type="button" class="submit ajax_starter_saveresource btn_update_resource" id="update-resource" value="Update Resource">
-                                <span style="display:none;" class="ajax_message_saveresource"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
-                                <span style="display:none;" class="ajax_notification_saveresource"></span>
+                                <span class="hide ajax_message_saveresource"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
+                                <span class="hide ajax_notification_saveresource"></span>
                             </div>
                         </div>
                         <!--end file sub-region 3-->
@@ -479,18 +471,17 @@ function local_lp_coursewizard_completion_tab($overallagg, $activitycompletion){
     $output = '';
     $output .= '
         <!----------------- Course completion tab ----------------->
-        <div class="tab-page" id="tab4" role="tabpanel">
+        <div class="hide tab-page" id="tab3" role="tabpanel">
             <div class="region region-one first">
-                <h2>Course Completion</h2>
-                <p>Tootsie roll cookie macaroon. Wafer cheesecake cotton candy. Candy canes muffin jelly oat cake.</p>
-                <p>Jelly beans gummi bears halvah. Cotton candy oat cake jelly pie chupa chups topping pastry. </p>
+                <h2>'.get_string('coursecompletionheading','local_lp_coursewizard').'</h2>
+                <p>'.get_string('coursecompletiondescription','local_lp_coursewizard').'</p>
                 '.$overallagg.'
             </div>
 
             <div class="region region-two">
                 <div class="form-field" id="activity-completion-container">
-                    <a class="help">?<span>Choose the activies that you want to contribute towards completion</span></a>
-                    <h3>Activities To Complete</h3>
+                    <a class="help">?<span>'.get_string('coursecompletiondescription','local_lp_coursewizard').'</span></a>
+                    <h3>'.get_string('coursecompletionactivityheader','local_lp_coursewizard').'</h3>
                     <span class="form-step">A</span>
                     '.$activitycompletion.'
                </div>
@@ -500,8 +491,8 @@ function local_lp_coursewizard_completion_tab($overallagg, $activitycompletion){
                 <div class="form-field">
                    <span class="form-step">C</span>
                    <input type="button" class="submit ajax_starter_savecompletion" id="save-completion" value="Save Completion">
-                   <span style="display:none;" class="ajax_message_savecompletion"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
-                   <span style="display:none;" class="ajax_notification_savecompletion"></span>
+                   <span class="hide ajax_message_savecompletion"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
+                   <span class="hide ajax_notification_savecompletion"></span>
                 </div>
             </div>
 
@@ -515,29 +506,22 @@ function local_lp_coursewizard_enrolement_tab($enrolledusers, $unenrolledusers){
     $output = '';
     $output .= '
         <!----------------- Enrolement tab ----------------->
-        <div class="tab-page" id="tab5" role="tabpanel">
+        <div class="hide tab-page" id="tab4" role="tabpanel">
 
             <div class="region region-one first">
-                <h2>Enrolment</h2>
-                <p>Tootsie roll cookie macaroon. Wafer cheesecake cotton candy. Candy canes muffin jelly oat cake.</p>
-                <p>Jelly beans gummi bears halvah. Cotton candy oat cake jelly pie chupa chups topping pastry. </p>
+                <h2>'.get_string('enrolementheading','local_lp_coursewizard').'</h2>
+                <p>'.get_string('enrolementdescription','local_lp_coursewizard').'</p>
             </div>
 
             <div class="region region-two">
-                <div class="form-field">
-                        <a class="help">?<span>Click this button to view Enrolled Users</span></a>
-                        <h3>View Enrolled Users</h3>
-                </div>
+                <h3>'.get_string('enrolementenrolledusers','local_lp_coursewizard').'</h3>
                 <div id="enrolled-users-container">
                     '.$enrolledusers.'<!--This will contain the current users table-->
                 </div>
             </div>
 
             <div class="region region-two last">
-                <div class="form-field">
-                    <a class="help">?<span>Click this button to Enrol Users</span></a>
-                    <h3>Enrol Users</h3>
-                </div>
+                <h3>'.get_string('enrolementunenrolledusers','local_lp_coursewizard').'</h3>
                 <div id="unenrolled-users-container">
                     '.$unenrolledusers.'<!--This will contain the current users table-->
                 </div>
@@ -553,30 +537,29 @@ function local_lp_coursewizard_publish_tab($category_select=""){
     $output = '';
     $output .= '
         <!----------------- Publish tab ----------------->
-        <div class="tab-page" id="tab6" role="tabpanel">
+        <div class="hide tab-page" id="tab5" role="tabpanel">
 
             <div class="region region-one first">
-                <h2>Publish</h2>
-                <p>Tootsie roll cookie macaroon. Wafer cheesecake cotton candy. Candy canes muffin jelly oat cake.</p>
-                <p>Jelly beans gummi bears halvah. Cotton candy oat cake jelly pie chupa chups topping pastry. </p>
+                <h2>'.get_string('publishheading','local_lp_coursewizard').'</h2>
+                <p>'.get_string('publishdescription','local_lp_coursewizard').'</p>
             </div>
 
-            <div class="region region-two last">
+            <div class="region region-two">
                 <div class="form-field">
                     <h3>Select Course category</h3>
                     '.$category_select.'
                 </div>
+            </div>
+
+            <div class="region region-three last">
+                <h3>Publish Course</h3>
                 <div class="form-field">
-                    <a class="help">?<span>Click this button to publish the course and make it visbile to users</span></a>
-                    <h3>Publish Course</h3>
-                    <span class="form-step">A</span>
                     <a href="#" id="publish-button" class="publish-button ajax_starter_publishcourse">Publish Course</a>
-                    <span style="display:none;" class="ajax_message_publishcourse"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Publishing...</span>
-                    <span style="display:none;" class="ajax_notification_publishcourse"></span>
+                    <span class="hide ajax_message_publishcourse"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Publishing...</span>
+                    <span class="hide ajax_notification_publishcourse"></span>
                    
                 </div>
             </div>
-
         </div>
         <!----------------- END Publish tab ----------------->
     ';
@@ -737,7 +720,7 @@ class lp_coursewizard_course{
                               <td></td>
                               <td></td>
                               <td></td>
-                              <td>'.$button.'</td>
+                              <td></td>
                             </tr>
                         </tfoot>
                         <tbody>';
@@ -765,6 +748,7 @@ class lp_coursewizard_course{
                 }
             }
             $output .= '</tbody></table>';
+            $output .= '<div class="form-field" id="enroll-users-btn">'.$button.'</div>';
             return array('success'=>true,'message'=>$output);
         }
         else{
@@ -809,7 +793,8 @@ class lp_coursewizard_course{
     
     
     public function render_completion_requirements(){
-        $output = '<div class="form-field">';
+        //as there is only activity compkletion in the wizard hide this
+        $output = '<div class="hide form-field">';
         $output .= '<select name="overall_aggregation" id="id_overall_aggregation">';
         $selected = 'selected="selected"';
         foreach($this->completionrequirements as $key=>$val){
@@ -885,12 +870,12 @@ class lp_coursewizard_course{
             foreach($this->sections as $secid=>$secval){
                 if(isset($this->sections[$secid]['mods'])){
                     foreach($this->sections[$secid]['mods'] as $mod){
-                        $style = $firstsection ? 'style="display:none;"' : '';
-                        $tablerows .= '<tr id="'.$mod['id'].'" class="section_'.$secid.' '.$mod['type'].'" '.$style.'>
-                                        <td id="module-'.$mod['id'].'-icon"><img src="'.$mod['icon'].'" class="activityicon iconlarge"></td>
+                        $style = $firstsection ? 'hide' : '';
+                        $tablerows .= '<tr id="'.$mod['id'].'" class="section_'.$secid.' '.$mod['type'].' '.$style.'">
+                                        <td class="td_icon"><img src="'.$mod['icon'].'" class="activityicon iconlarge"></td>
                                         <td class="mod_name">'.$mod['name'].'</td>
                                         <td><button id="'.$mod['id'].'" type="button" class="btn_edit_mod '.$mod['type'].' ajax_starter_editresource_'.$mod['id'].'">Edit</button>
-                                            <span style="display:none;" class="ajax_message_editresource_'.$mod['id'].'"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Loading Resource...</span></td>
+                                            <span class="hide ajax_message_editresource_'.$mod['id'].'"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Loading Resource...</span></td>
                                     </tr>';
                     }
                 }

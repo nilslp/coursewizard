@@ -46,11 +46,32 @@ $string['addresourceactivitytab'] = "Add an Activity";
 $string['addresourceresourcetab'] = "Add a Resource";
 $string['addresourcescormtab'] = "Add a SCORM";
 $string['addresourcefiletab'] = "Add a FILE";
+$string['addresourcescormhelp'] = "Locate the SCORM file on your computer and upload here";
+$string['addresourcefilehelp'] = "Locate the file on your computer and upload here";
+$string['addresourcescormupload'] = "Upload SCORM";
+$string['addresourcefileupload'] = "Upload File";
+$string['addresourcedetailsheading'] = "Activity Details";
+$string['addresourcecompletionheading'] = "Activity Completion";
+$string['addresourcecompletionhelp'] = "Choose what students must do to complete activity";
 
+//course completion tab
+$string['coursecompletionheading'] = "Course Completion";
+$string['coursecompletiondescription'] = "Choose the activies that you want to contribute towards completion.";
+$string['coursecompletionactivityheader'] = "Activities To Complete";
+
+//enrolement tab
+$string['enrolementheading'] = "Enrolment";
+$string['enrolementdescription'] = "Here you can view currently enrolled users. You can also enrol users on this course.";
+$string['enrolementenrolledusers'] = "Enrolled Users";
+$string['enrolementunenrolledusers'] = "Unenrolled Users";
+
+//publish tab
+$string['publishheading'] = "Publish";
+$string['publishdescription'] = "Publish the course and make it visbile to users.";
+
+//errors
 $string['error:badsesskey'] = "Invalid session key.";
 $string['error:coursecreationdb'] = "Unable to create course in database";
-
-
 
 //settings
 $string['templatelocation'] = 'Fileame of the backup course.';

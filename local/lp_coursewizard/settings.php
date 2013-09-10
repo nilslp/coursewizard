@@ -18,11 +18,17 @@ defined('MOODLE_INTERNAL') || die;
 
 global $CFG;
 
-// add link to coursewizard configuration page
-$ADMIN->add('lpcoursewizardadmin',
-    new admin_externalpage('lpcoursewizardconfiguration',
-        get_string('lpcoursewizardconfiguration','local_lp_coursewizard'),
-        "$CFG->wwwroot/local/lp_coursewizard/configure.php",
-        'moodle/site:config'
-    )
-);
+if ($hassiteconfig) {
+    $settings = new admin_settingpage('local_coursewizard', get_string('pluginname', 'local_lp_coursewizard'));
+    
+    $ADMIN->add('localplugins', $settings);
+
+    $settings->add(
+            new admin_setting_configtext('local_lp_coursewizard/templatelocation', 
+                    get_string('templatelocation', 'local_lp_coursewizard'),
+                    get_string('templatelocation', 'local_lp_coursewizard'), 
+                    get_string('templatelocation', 'local_lp_coursewizard'), 
+                    PARAM_TEXT));
+
+}
+
