@@ -128,10 +128,10 @@ function local_lp_coursewizard_html() {
                 <!--<li id="thetab1"><a href="#tab1"><span class="step-number"></span>Overview</a></li>-->
                 <li id="tab1" class="selected"><a href="#tab1">Create a Course</a></li>
                 <?php }else{ ?>
-                    <li id="tab2" class="selected"><a href="#tab2"><span class="step-number">1</span>Add an Activity or Resource</a></li>
-                    <li id="tab3"><a href="#tab3"><span class="step-number">2</span>Course Completion</a></li>
-                    <li id="tab4"><a href="#tab4"><span class="step-number">3</span>Enrolment</a></li>
-                    <li id="tab5"><a href="#tab5"><span class="step-number">4</span>Publish</a></li>
+                    <li id="tab2" class="selected"><a href="#tab2"><span class="step-number">1</span><span class="step-text">Add an Activity or Resource</span></a></li>
+                    <li id="tab3"><a href="#tab3"><span class="step-number">2</span><span class="step-text">Course Completion</span></a></li>
+                    <li id="tab4"><a href="#tab4"><span class="step-number">3</span><span class="step-text">Enrolment</span></a></li>
+                    <li id="tab5"><a href="#tab5"><span class="step-number">4</span><span class="step-text">Publish</span></a></li>
                 <?php } ?>
                 <!-- style="display:none;"-->
             </ul>
@@ -354,46 +354,47 @@ function local_lp_coursewizard_addactivity_tab($section_select, $resource_table)
     $output = '';
     $output .= '
          <!----------------- Add and activity or resource tab ----------------->
-        <div class="tab-page" id="tab2" role="tabpanel">
+        <div class="tab-page activity-tab-content" id="tab2" role="tabpanel">
 
                 <div class="region region-one first">
-                    <h2>'.get_string('addresourceheading','local_lp_coursewizard').'</h2>
-                    <p>'.get_string('addresourceselectintro','local_lp_coursewizard').$section_select.'</p>
-                    
-                    <ul role="tablist" class="tabs"> 
-                        <li id="theTabScorm"><a>'.get_string('addresourcescormtab','local_lp_coursewizard').'</a></li>
-                        <li id="theTabFile"><a>'.get_string('addresourcefiletab','local_lp_coursewizard').'</a></li>
-                    </ul>
-                    <div class="hide form-field ajax_starter_uploadscorm" id="scormuploadcontainer">
-                        <a class="help">?<span>'.get_string('addresourcescormhelp','local_lp_coursewizard').'</span></a>
-                        <span class="form-step">A</span>
-                        <form id="upload_scorm" enctype="multipart/form-data" method="post">
-                            <label for="upload-scorm">'.get_string('addresourcescormupload','local_lp_coursewizard').'</label>
-                            <input class="ajax_starter_upload" id="upload-scorm" type="file" name="repo_upload_file" value="uploadSCORM">
-                        </form>
+                    <div class="sub-region sub-region-one">
+                        <h2>'.get_string('addresourceheading','local_lp_coursewizard').'</h2>
+                        <p>'.get_string('addresourceselectintro','local_lp_coursewizard').$section_select.'</p>
+                        
+                        <ul role="tablist" class="tabs"> 
+                            <li id="theTabScorm"><a>'.get_string('addresourcescormtab','local_lp_coursewizard').'</a></li>
+                            <li id="theTabFile"><a>'.get_string('addresourcefiletab','local_lp_coursewizard').'</a></li>
+                        </ul>
+                        <div class="hide form-field ajax_starter_uploadscorm" id="scormuploadcontainer">
+                            <a class="help">?<span>'.get_string('addresourcescormhelp','local_lp_coursewizard').'</span></a>
+                            <span class="form-step">A</span>
+                            <form id="upload_scorm" enctype="multipart/form-data" method="post">
+                                <label for="upload-scorm">'.get_string('addresourcescormupload','local_lp_coursewizard').'</label>
+                                <input class="ajax_starter_upload" id="upload-scorm" type="file" name="repo_upload_file" value="uploadSCORM">
+                            </form>
+                        </div>
+                        <div class="hide form-field ajax_starter_uploadfile" id="fileuploadcontainer">
+                            <a class="help">?<span>'.get_string('addresourcefilehelp','local_lp_coursewizard').'</span></a>
+                            <span class="form-step">A</span>
+                            <form id="upload_resource" enctype="multipart/form-data" method="post">
+                                <label for="upload-resource">'.get_string('addresourcefileupload','local_lp_coursewizard').'</label>
+                                <input class="" id="upload-resource" type="file" name="repo_upload_file" value="uploadFile"/>
+                                <input name="" type="hidden"/>
+                            </form>
+                        </div>
+                        <span class="hide ajax_message_upload"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Uploading file...</span>
+                        <span class="hide ajax_notification_upload"></span>
                     </div>
-                    <div class="hide form-field ajax_starter_uploadfile" id="fileuploadcontainer">
-                        <a class="help">?<span>'.get_string('addresourcefilehelp','local_lp_coursewizard').'</span></a>
-                        <span class="form-step">A</span>
-                        <form id="upload_resource" enctype="multipart/form-data" method="post">
-                            <label for="upload-resource">'.get_string('addresourcefileupload','local_lp_coursewizard').'</label>
-                            <input class="" id="upload-resource" type="file" name="repo_upload_file" value="uploadFile"/>
-                            <input name="" type="hidden"/>
-                        </form>
+
+                    <div class="sub-region sub-region-two">
+                        <h3>Current Modules</h3>
+                        '.$resource_table.'
                     </div>
-                    <span class="hide ajax_message_upload"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Uploading file...</span>
-                    <span class="hide ajax_notification_upload"></span>
                 </div>
                 <!--End region 1-->
 
-                <div class="region region-two" id="region-two">
-                    <h3>Current Modules</h3>
-                    '.$resource_table.'
-                </div>
-                <!--End region 2-->
-                
-                <div class="region region-three last">
-                
+                <div class="region region-two">
+                    
                     <div id="scorm-content" class="hide">
                         <div class="sub-region sub-region-one">
                             <div class="form-field">
@@ -411,25 +412,29 @@ function local_lp_coursewizard_addactivity_tab($section_select, $resource_table)
                                 <h3>'.get_string('addresourcecompletionheading','local_lp_coursewizard').'</h3>
                                 <span class="form-step">D</span>
                                 <div id="scorm-completion-container">
-                                <!--shit will be added here-->
+                                    <!--shit will be added here-->
                                 </div>
                             </div>
                             <div class="form-field">
                                 <span class="form-step">E</span>
+                                <input type="button" class="submit btn_activity_back" value="Cancel"/>
                                 <input type="button" class="submit ajax_starter_saveresource btn_update_resource" id="update-scorm" value="Update SCORM">
                                 <span class="hide ajax_message_saveresource"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
                                 <span class="hide ajax_notification_saveresource"></span>
                             </div>
                         </div>
                         <!--end scorm sub-region 2-->
-                        
                     </div>
                     <!-- end scorm content -->
                     
                     <div id="resource-content" class="hide">
-						
-                        <div id="resource-details-container" class="sub-region sub-region-one">
-                            <!--shit will be added here-->
+                        <div class="sub-region sub-region-one">
+                            <div class="form-field">
+                                <h3>Resource Details</h3>
+                                <div id="resource-details-container" class="sub-region sub-region-one">
+                                    <!--shit will be added here-->
+                                </div>
+                            </div>
                         </div>
                         <!--end file sub-region 1-->
 						
@@ -439,22 +444,19 @@ function local_lp_coursewizard_addactivity_tab($section_select, $resource_table)
                                 <h3>'.get_string('addresourcedetailsheading','local_lp_coursewizard').'</h3>
                                 <span class="form-step">D</span>
                                 <div id="resource-completion-container">
-                                <!--shit will be added here-->
+                                    <!--shit will be added here-->
                                 </div>
                             </div>
-                        </div>
-                        <!--end file sub-region 2-->
 
-                        <div class="sub-region sub-region-three last">
                             <div class="form-field">
                                 <span class="form-step">E</span>
+                                <input type="button" class="submit btn_activity_back" value="Cancel"/>
                                 <input type="button" class="submit ajax_starter_saveresource btn_update_resource" id="update-resource" value="Update Resource">
                                 <span class="hide ajax_message_saveresource"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
                                 <span class="hide ajax_notification_saveresource"></span>
                             </div>
                         </div>
-                        <!--end file sub-region 3-->
-						
+                        <!--end file sub-region 2-->
                     </div>
                     <!-- end file content -->
                     
@@ -472,27 +474,22 @@ function local_lp_coursewizard_completion_tab($overallagg, $activitycompletion){
     $output .= '
         <!----------------- Course completion tab ----------------->
         <div class="hide tab-page" id="tab3" role="tabpanel">
-            <div class="region region-one first">
-                <h2>'.get_string('coursecompletionheading','local_lp_coursewizard').'</h2>
-                <p>'.get_string('coursecompletiondescription','local_lp_coursewizard').'</p>
-                '.$overallagg.'
-            </div>
 
-            <div class="region region-two">
-                <div class="form-field" id="activity-completion-container">
-                    <a class="help">?<span>'.get_string('coursecompletiondescription','local_lp_coursewizard').'</span></a>
-                    <h3>'.get_string('coursecompletionactivityheader','local_lp_coursewizard').'</h3>
-                    <span class="form-step">A</span>
-                    '.$activitycompletion.'
-               </div>
-            </div>
+            <div class="region region-one">
+                <div class="sub-region sub-region-one">
+                    <div class="form-field" id="activity-completion-container">
+                        <a class="help">?<span>'.get_string('coursecompletiondescription','local_lp_coursewizard').'</span></a>
+                        <h3>'.get_string('coursecompletionactivityheader','local_lp_coursewizard').'</h3>
+                        <span class="form-step">A</span>
+                        '.$activitycompletion.'
+                   </div>
 
-            <div class="region region-four last">
-                <div class="form-field">
-                   <span class="form-step">C</span>
-                   <input type="button" class="submit ajax_starter_savecompletion" id="save-completion" value="Save Completion">
-                   <span class="hide ajax_message_savecompletion"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
-                   <span class="hide ajax_notification_savecompletion"></span>
+                    <div class="form-field">
+                       <span class="form-step">C</span>
+                       <input type="button" class="submit ajax_starter_savecompletion" id="save-completion" value="Save Completion">
+                       <span class="hide ajax_message_savecompletion"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Saving...</span>
+                       <span class="hide ajax_notification_savecompletion"></span>
+                    </div>
                 </div>
             </div>
 
@@ -508,22 +505,19 @@ function local_lp_coursewizard_enrolement_tab($enrolledusers, $unenrolledusers){
         <!----------------- Enrolement tab ----------------->
         <div class="hide tab-page" id="tab4" role="tabpanel">
 
-            <div class="region region-one first">
-                <h2>'.get_string('enrolementheading','local_lp_coursewizard').'</h2>
-                <p>'.get_string('enrolementdescription','local_lp_coursewizard').'</p>
-            </div>
-
-            <div class="region region-two">
-                <h3>'.get_string('enrolementenrolledusers','local_lp_coursewizard').'</h3>
-                <div id="enrolled-users-container">
-                    '.$enrolledusers.'<!--This will contain the current users table-->
+            <div class="region region-one">
+                <div class="sub-region sub-region-one">
+                    <h3>'.get_string('enrolementenrolledusers','local_lp_coursewizard').'</h3>
+                    <div id="enrolled-users-container">
+                        '.$enrolledusers.'<!--This will contain the current users table-->
+                    </div>
                 </div>
-            </div>
 
-            <div class="region region-two last">
-                <h3>'.get_string('enrolementunenrolledusers','local_lp_coursewizard').'</h3>
-                <div id="unenrolled-users-container">
-                    '.$unenrolledusers.'<!--This will contain the current users table-->
+                <div class="sub-region sub-region-two">
+                    <h3>'.get_string('enrolementunenrolledusers','local_lp_coursewizard').'</h3>
+                    <div id="unenrolled-users-container">
+                        '.$unenrolledusers.'<!--This will contain the current users table-->
+                    </div>
                 </div>
             </div>
 
@@ -539,27 +533,22 @@ function local_lp_coursewizard_publish_tab($category_select=""){
         <!----------------- Publish tab ----------------->
         <div class="hide tab-page" id="tab5" role="tabpanel">
 
-            <div class="region region-one first">
-                <h2>'.get_string('publishheading','local_lp_coursewizard').'</h2>
-                <p>'.get_string('publishdescription','local_lp_coursewizard').'</p>
-            </div>
+            <div class="region region-one">
+                <div class="sub-region sub-region-one">
+                    <div class="form-field">
+                        <h3>Select Course category</h3>
+                        '.$category_select.'
+                    </div>
 
-            <div class="region region-two">
-                <div class="form-field">
-                    <h3>Select Course category</h3>
-                    '.$category_select.'
+                    <h3>Publish Course</h3>
+                    <div class="form-field">
+                        <a href="#" id="publish-button" class="publish-button ajax_starter_publishcourse">Publish Course</a>
+                        <span class="hide ajax_message_publishcourse"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Publishing...</span>
+                        <span class="hide ajax_notification_publishcourse"></span>
+                    </div>
                 </div>
             </div>
 
-            <div class="region region-three last">
-                <h3>Publish Course</h3>
-                <div class="form-field">
-                    <a href="#" id="publish-button" class="publish-button ajax_starter_publishcourse">Publish Course</a>
-                    <span class="hide ajax_message_publishcourse"><img src="'.$CFG->wwwroot.'/pix/i/loading_small.gif"/>Publishing...</span>
-                    <span class="hide ajax_notification_publishcourse"></span>
-                   
-                </div>
-            </div>
         </div>
         <!----------------- END Publish tab ----------------->
     ';

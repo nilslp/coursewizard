@@ -277,6 +277,18 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
                         Y.one('div#resource-details-container').empty().append(response.moddetails);
                         showHide('#resource-content','#scorm-content');
                     }
+                    var el = Y.one('.activity-tab-content .region-one');
+                    el && el.transition({
+                        duration: 1,
+                        left: '-' + get_current_width(el) + 'px',
+                        opacity: 0
+                    });
+                    var elTwo = Y.one('.activity-tab-content .region-two');
+                    elTwo && elTwo.transition({
+                        duration: 1,
+                        left: 0,
+                        opacity: 1
+                    });
                 }
                 else{
                     showError(response.message);
@@ -285,7 +297,22 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
             });
         }
     },'.btn_edit_mod');
+
+    function get_current_width(el){
+        console.log(parseInt(el.get('offsetWidth', 10)));
+        return parseInt(el.get('offsetWidth', 10));
+    }
+
+    // Set 2nd Region Left (Of Screen & recalculate on Resize)
+    var elOne = Y.one('.activity-tab-content .region-one');
+    var elTwo = Y.one('.activity-tab-content .region-two');
+
+    elTwo && elTwo.setStyle('left', get_current_width(elOne) + 'px');
     
+    // Y.one('win').on('resize', function(e) {
+    //     elTwo && elTwo.setStyle('left', get_current_width(elOne) + 'px');
+    // });
+        
     
     updateModuleButtons && updateModuleButtons.on('click',function(e){
         if(!ajaxloading){
@@ -323,6 +350,19 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
                     showError(response.message);
                 }
                 ajaxEnd('saveresource');
+                
+                var elTwo = Y.one('.activity-tab-content .region-two');
+                elTwo && elTwo.transition({
+                    duration: 1,
+                    left: get_current_width(elOne) + 'px',
+                    opacity: 0
+                });
+                var el = Y.one('.activity-tab-content .region-one');
+                el && el.transition({
+                    duration: 1,
+                    left: 0,
+                    opacity: 1
+                });
             });
         }
     });
@@ -366,6 +406,23 @@ M.local_lp_coursewizard.init = function(Y,sesskey,siteurl,courseId) {
         Y.one('#resource-content').addClass('hide');
     });
     //END add a file tab
+
+    var backBtns = Y.one('.activity-tab-content .region-two');
+    backBtns && backBtns.delegate('click',function(){
+        var elTwo = Y.one('.activity-tab-content .region-two');
+        elTwo && elTwo.transition({
+            duration: 1,
+            left: get_current_width(elOne) + 'px',
+            opacity: 0
+        });
+        var el = Y.one('.activity-tab-content .region-one');
+        el && el.transition({
+            duration: 1,
+            left: 0,
+            opacity: 1
+        });
+    },
+    '.btn_activity_back');
     
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////// END Tab 2 Functions //////////////////////////////////////

@@ -6,6 +6,14 @@
 	display: block;
 	}
 
+#wizard-wrapper button{
+/*	border: 1px solid #FFF;
+	height: 30px;
+	margin: 0;
+	padding: 0;
+	width: 30px;*/
+	}
+
 #wizard-wrapper p{
 	font-size: 80%;
 	}
@@ -46,7 +54,7 @@
 
 #wizard-toggle-button,
 #publish-button{
-	background: #F30 url([[pix:local_lp_coursewizard|launch_wizard]]) no-repeat 95% center;
+	background: #390 url([[pix:local_lp_coursewizard|launch_wizard]]) no-repeat 95% center;
 	color: #FFF;
 	cursor: pointer;
 	display: block;
@@ -54,25 +62,31 @@
 	margin-bottom: 10px;
 	padding: 4%;
 	right: 0;
+	text-indent: 5px;
 	width: 92%;
 	}
 
 #publish-button{
-	background: #390 url([[pix:local_lp_coursewizard|publish_button]]) no-repeat 80% center;
-	padding: 12% 4%;
+	/*background: #390 url([[pix:local_lp_coursewizard|publish_button]]) no-repeat 80% center;*/
+	background: #390 url([[pix:local_lp_coursewizard|launch_wizard]]) no-repeat 80% center;
+	height: 100px;
+	line-height: 100px;
+	/*padding: 12% 4%;*/
+	padding: 0;
+	text-indent: 30px;
+	width: 280px;
 	}
 
 	#publish-button:hover{
 		background-color: #2D9300;
 		}
-
 	
 	#wizard-toggle-button:hover{
-		background-color: #DF2300;
+		background-color: #2D9300;
 		}
 		
 	#wizard-toggle-button:active{
-		background-color: #C00;
+		background-color: #137900;
 		}
 
 	#wizard-toggle-button.selected{
@@ -80,15 +94,15 @@
 		}
 	
 #wizard-toggle-button.active{
-	background-color: #390;
+	background-color: #F30;
 	}
 	
 	#wizard-toggle-button.active:hover{
-		background-color: #2D9300;
+		background-color: #DF2300;
 		}
 		
 	#wizard-toggle-button.active:active{
-		background-color: #137900;
+		background-color: #C00;
 		}
 	
 #wizard-wrapper{
@@ -96,6 +110,8 @@
 	bottom: -400px;
 	height: 370px;
 	left: 0;
+	/*min-width: 340px;*/
+	min-width: 780px;
 	position: fixed;
 	transition: 0.5s ease-in-out 0.1s;
 	-webkit-transform: translateZ(0);
@@ -187,8 +203,10 @@ ul#tabs-visibility-controls{
 	background: #555;
 	border-bottom: 2px solid #222;
 	height: 30px;
+	position: relative;
 	text-align: left;
 	width: 100%;
+	z-index: 2;
 	}
 
 	#wizard-wrapper ul.steps li{
@@ -352,7 +370,7 @@ ul#tabs-visibility-controls{
 	}
 
 #wizard-wrapper table#resourcecompletiontable{
-	height: 185px;
+	height: 145px;
 	}
 
 #wizard-wrapper table#unenrolledusertable{
@@ -368,10 +386,14 @@ ul#tabs-visibility-controls{
 
 #wizard-wrapper select#sectionSelect{
 	margin-bottom: 0;
+	margin-left: 10px;
+	width: 152px;
 	}
 
-#wizard-wrapper form#upload_scorm{
+#wizard-wrapper form#upload_scorm,
+#wizard-wrapper form#upload_resource{
 	padding: 15px;
+	max-width: 290px;
 	}
 
 /* ------------------------------------------------------------------- */
@@ -386,40 +408,44 @@ ul#tabs-visibility-controls{
 	}
 
 .tab-page{
-	position: relative;
+	height: 100%;
+	position: absolute;
 	width: 100%;
 	}
 	
 .region{
+	background-color: #999;
 	border-right: 1px solid #888;
 	display: inline-block;
-	height: 300px;
-	margin: 20px 0;
-	padding: 0 1%;
-	position: relative;
+	height: 100%;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
 	vertical-align: top;
-	width: 18%;
+	width: 100%;
+	/*width: 23%;*/
 	}
 
-.region-three{
-	width: 57%;
-	}
-
-	#tab5 .region-three{
-		width: 18%;
+	.region-one{
+		/*background: #000;*/
+		z-index: 1;
 		}
-	
+
+	.region-two{
+		/*background: #FF0;*/
+		/*z-index: -1;*/
+		}
+
 .sub-region{
     /*border-right: 1px solid #888888;*/
     display: inline-block;
-    /*margin-right: 4%;*/
-    padding: 0 1%;
+    margin: 10px 2%;
+    max-width: 500px;
+    padding: 0;
     vertical-align: top;
-    width: 30%;
-	}
-
-.sub-region.last{
-    margin-right: 0;
+    width: 45%;
 	}
 
 	.form-field{
@@ -481,10 +507,11 @@ a.help{
 	}
 
 #wizard-wrapper table tr{
-	height: 30px
+	height: auto;
 	}
 
 #wizard-wrapper table td{
+	border-top: 1px solid #888888;
 	color: #369C10;
 	}
 
@@ -573,3 +600,18 @@ Add an activity or resource
 div#tab3 div.region-three{
     width:55%;
 }*/
+
+@media all and (max-width: 980px) {
+
+#wizard-wrapper ul.steps li a{
+	padding: 0 10px 0 30px;
+	}
+
+	#wizard-wrapper ul.steps li a .step-number{
+		margin-right: 0;
+		}
+
+	#wizard-wrapper ul.steps li a .step-text{
+		display: none;
+		}
+}
